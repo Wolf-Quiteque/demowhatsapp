@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   const { email } = data;
 
   const cliente = await clientPromise;
-  const db = cliente.db("myFirstDatabase");
+  const db = cliente.db("anje");
   const resul = await db.collection("usuarios").findOne({ email: email });
   res.json(resul);
 }

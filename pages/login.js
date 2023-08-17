@@ -61,12 +61,13 @@ export default function Login() {
 
       {status == "unauthenticated" ? (
         <>
-          <div className="login-box" style={{ marginTop: "200px" }}>
+          <Head>
+            <title>Iniciar Sessão - ANJE</title>
+          </Head>
+          <div className="login-box">
             <div className="card card-outline card-primary">
               <div className="card-header text-center">
-                <a href="#" className="h1">
-                  <b>Demo</b>
-                </a>
+                <img className="img-fluid" src="/img/logo.png" />
               </div>
               <div className="card-body">
                 <p className="login-box-msg">Inciar Sessão</p>
@@ -116,6 +117,11 @@ export default function Login() {
                           Iniciar Sessão
                         </button>
                       )}
+                      <Link href="/inscricao">
+                        <a className="btn btn-sm btn-warning btn-block">
+                          Inscrever
+                        </a>
+                      </Link>
                     </div>
                   </div>
                 </form>

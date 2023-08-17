@@ -3,45 +3,96 @@ import { useRouter } from "next/router";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import { getDecryptedCookie, setEncryptedCookie } from "../../lib/session";
 
 export default function Layout({ children }) {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [usuario, setusuario] = useState();
+  const [usuario, setusuario] = useState(null);
 
   const getsession = async () => {
     if (status === "unauthenticated") {
       router.replace("/login");
+      const element = document.querySelector("body");
+      element.classList.add("hero");
+    } else {
+      const element = document.querySelector("body");
+      element.classList.remove("hero");
     }
   };
 
+  const getuser = async () => {
+    try {
+      const res = await fetch("/api/usuarios/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session.user.email,
+        }),
+      });
+
+      const response = await res.json();
+      setEncryptedCookie("authsesh", response);
+
+      setusuario(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const getsesh = async () => {
+  //   const response = await getDecryptedCookie("authsesh");
+
+  // };
+
   useEffect(() => {
     getsession();
+    if (status == "authenticated" && usuario == null) {
+      getuser();
+    }
   }, [status, session]);
 
   return (
-    <>
+    <div className="wrapper">
       {status == "authenticated" ? (
         router.pathname != "/empresa/[empresa_id]" ? (
-          <div
-            className={
-              router.pathname == "/login"
-                ? "wrapper login-page-inactivo"
-                : router.pathname == "/recuperacao"
-                ? "wrapper login-page-inactivo"
-                : router.pathname == "/empresa/[empresa_id]"
-                ? "wrapper login-page-inactivo"
-                : "login-page-activo"
-            }
-          >
-            <nav className="main-header navbar navbar-expand navbar-white navbar-light sticky-top">
-              <ul className="navbar-nav">
-                <li className="nav-item mt-3">
-                  <h4>
-                    <i className=" fas fa-solid fa-circle text-success"></i>{" "}
-                    {usuario && usuario.nome}
-                  </h4>
-                </li>
+          <>
+            <div
+              className={
+                router.pathname == "/login"
+                  ? "wrapper login-page-inactivo"
+                  : router.pathname == "/recuperacao"
+                  ? "wrapper login-page-inactivo"
+                  : router.pathname == "/empresa/[empresa_id]"
+                  ? "wrapper login-page-inactivo"
+                  : "login-page-activo"
+              }
+            >
+              <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+                <ul className="navbar-nav">
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      data-widget="pushmenu"
+                      href="#"
+                      role="button"
+                    >
+                      <i className="fas fa-bars"></i>
+                    </a>
+                  </li>
+                  <li className="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" className="nav-link">
+                      Home
+                    </a>
+                  </li>
+                  <li className="nav-item d-none d-sm-inline-block">
+                    <a href="#" className="nav-link">
+                      Contact
+                    </a>
+                  </li>
+                </ul>
 
                 {/* <li className="nav-item dropdown">
             <a
@@ -133,132 +184,124 @@ export default function Layout({ children }) {
               </li>
             </ul>
           </li>*/}
-              </ul>
+                {/* </ul> */}
 
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    data-widget="navbar-search"
-                    href="#"
-                    role="button"
-                  >
-                    &nbsp; <i className="fas fa-search"></i>
-                  </a>
-                  <div className="navbar-search-block">
-                    <form className="form-inline">
-                      <div className="input-group input-group-sm">
-                        <input
-                          className="form-control form-control-navbar"
-                          type="search"
-                          placeholder="Pesquisar Empresa"
-                          aria-label="Search"
-                        />
-                        <div className="input-group-append">
-                          <button className="btn btn-navbar" type="submit">
-                            <i className="fas fa-search"></i>
-                          </button>
-                          <button
-                            className="btn btn-navbar"
-                            type="button"
-                            data-widget="navbar-search"
-                          >
-                            <i className="fas fa-times"></i>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </li>
-                <li></li>
-
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    href="#"
-                    role="button"
-                    onClick={signOut}
-                  >
-                    <i className="fas fa-power-off text-danger"></i>
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a className="nav-link" href="#" role="button">
-                    <i className="fas fa-user"></i>
-                  </a>
-                </li>
-
-                <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    data-widget="fullscreen"
-                    href="#"
-                    role="button"
-                  >
-                    <i className="fas fa-expand-arrows-alt"></i>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-
-            <aside className="main-sidebar sidebar-dark-primary elevation-4 ">
-              <Link href="/">
-                <a className="brand-link">
-                  <span className="brand-text font-weight-light">G-LAB</span>
-                </a>
-              </Link>
-
-              <div className="sidebar">
-                <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-                  <div className="image">
-                    <img
-                      src="https://picsum.photos/200"
-                      className="img-circle elevation-2"
-                      alt="User Image"
-                    />
-                  </div>
-                  <div className="info">
-                    <a href="#" className="d-block">
-                      Usuario
+                <ul className="navbar-nav ml-auto">
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      data-widget="navbar-search"
+                      href="#"
+                      role="button"
+                    >
+                      &nbsp; <i className="fas fa-search"></i>
                     </a>
-                  </div>
-                </div>
+                    <div className="navbar-search-block">
+                      <form className="form-inline">
+                        <div className="input-group input-group-sm">
+                          <input
+                            className="form-control form-control-navbar"
+                            type="search"
+                            placeholder="Pesquisar Empresa"
+                            aria-label="Search"
+                          />
+                          <div className="input-group-append">
+                            <button className="btn btn-navbar" type="submit">
+                              <i className="fas fa-search"></i>
+                            </button>
+                            <button
+                              className="btn btn-navbar"
+                              type="button"
+                              data-widget="navbar-search"
+                            >
+                              <i className="fas fa-times"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </li>
+                  <li></li>
 
-                <div className="form-inline">
-                  <div className="input-group" data-widget="sidebar-search">
-                    <input
-                      className="form-control form-control-sidebar"
-                      type="search"
-                      placeholder="Pesquisar"
-                      aria-label="Search"
-                    />
-                    <div className="input-group-append">
-                      <button className="btn btn-sidebar">
-                        <i className="fas fa-search fa-fw"></i>
-                      </button>
+                  <li className="nav-item">
+                    <a
+                      className="nav-link"
+                      href="#"
+                      role="button"
+                      onClick={signOut}
+                    >
+                      <i className="fas fa-power-off text-danger"></i>
+                    </a>
+                  </li>
+
+                  <li className="nav-item">
+                    <a className="nav-link" href="#" role="button">
+                      <i className="fas fa-user"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
+              <aside className="main-sidebar sidebar-dark-primary elevation-4 ">
+                <a href="index3.html" class="brand-link">
+                  <img
+                    src="img/logo.png"
+                    alt="ANJE"
+                    className="img-fluid"
+                    style={{ opacity: " .8" }}
+                  />
+                </a>
+
+                <div className="sidebar">
+                  <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div className="image">
+                      <img
+                        src="https://picsum.photos/200"
+                        className="img-circle elevation-2"
+                        alt="User Image"
+                      />
+                    </div>
+                    <div className="info">
+                      <a href="#" className="d-block">
+                        {usuario && usuario.nome}
+                      </a>
                     </div>
                   </div>
-                </div>
 
-                <nav className="mt-2">
-                  <ul
-                    className="nav nav-pills nav-sidebar flex-column"
-                    data-widget="treeview"
-                    role="menu"
-                    data-accordion="false"
-                  >
-                    <li className="nav-header">Gerir</li>
+                  <div className="form-inline">
+                    <div className="input-group" data-widget="sidebar-search">
+                      <input
+                        className="form-control form-control-sidebar"
+                        type="search"
+                        placeholder="Pesquisar"
+                        aria-label="Search"
+                      />
+                      <div className="input-group-append">
+                        <button className="btn btn-sidebar">
+                          <i className="fas fa-search fa-fw"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
 
-                    <li className="nav-item">
-                      <a href="/" className="nav-link">
-                        <i className="nav-icon fas fa-address-book"></i>
-                        <p>Registros</p>
-                      </a>
-                    </li>
-                    <li className="nav-header">Configurações</li>
+                  <nav className="mt-2">
+                    <ul
+                      className="nav nav-pills nav-sidebar flex-column"
+                      data-widget="treeview"
+                      role="menu"
+                      data-accordion="false"
+                    >
+                      <li className="nav-header">Gerir</li>
 
-                    {/* <li className="nav-item">
+                      <li className="nav-item">
+                        <a href="/" className="nav-link">
+                          <i className="nav-icon fas fa-address-book"></i>
+                          <p>Registros</p>
+                        </a>
+                      </li>
+                      <li className="nav-header">Configurações</li>
+
+                      {/* <li className="nav-item">
                       <Link href="/gestao-usuarios">
                         <a className="nav-link">
                           <i className="nav-icon fas fa-users"></i>
@@ -266,32 +309,26 @@ export default function Layout({ children }) {
                         </a>
                       </Link>
                     </li> */}
-                  </ul>
-                </nav>
-              </div>
-            </aside>
-            <div className="content-wrapper">
-              <div className="content">
-                <div className="">{children}</div>
+                    </ul>
+                  </nav>
+                </div>
+              </aside>
+              <div className="content-wrapper">
+                <div className="content">
+                  <div className="">{children}</div>
+                </div>
               </div>
             </div>
-          </div>
+          </>
         ) : (
-          <div className="login-page-activo">{children}</div>
+          <div id="hero" className="login-page-activo">
+            {children}
+          </div>
         )
       ) : (
-        <div
-          className={
-            router.pathname == "/login"
-              ? "login-page-activo"
-              : router.pathname == "/recuperacao"
-              ? "login-page-activo"
-              : "login-page-inactivo"
-          }
-        >
-          {children}
-        </div>
+        <div className="container">{children}</div>
       )}
-    </>
+      <aside className="control-sidebar control-sidebar-dark"></aside>
+    </div>
   );
 }

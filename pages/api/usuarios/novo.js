@@ -1,39 +1,35 @@
 import { hashPassword } from "../../../lib/auth";
 import clientPromise from "../../../lib/mongodb";
+import makeid from "../../../lib/random";
 
 async function handler(req, res) {
   if (req.method !== "POST") {
     return;
   }
 
-  const data = req.body;
-
-  const { email, cargo, nome } = data;
-
+  var data = req.body;
   const client = await clientPromise;
 
-  const db = client.db("aef");
+  const db = client.db("anje");
+  const now = new Date();
 
   const existingUser = await db
     .collection("usuarios")
-    .findOne({ email: email });
+    .findOne({ email: data.email });
 
   if (existingUser) {
-    res.status(422).json({ message: "usuarioexiste" });
+    res.status(422).json({ message: "Email já existe" });
     return;
   }
 
-  const userpassword = "demo2023";
+  const userpassword = makeid();
   const hashedPassword = await hashPassword(userpassword);
 
-  const response = await db.collection("usuarios").insertOne({
-    email: email,
-    password: hashedPassword,
-    cargo: cargo,
-    nome: nome,
-  });
+  data.password = hashedPassword;
+  data.createdAt = new Date(now.getTime() + 1);
+  const response = await db.collection("usuarios").insertOne(data);
 
-  res.status(200).json(response);
+  res.status(200).json({ message: "success" });
 }
 
 export default handler;
