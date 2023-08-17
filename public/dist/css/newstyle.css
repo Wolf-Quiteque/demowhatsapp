@@ -19,7 +19,7 @@
   right: 0;
 }
 
-.container {
+.containerNew {
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
@@ -29,4 +29,61 @@
 .centered-div {
   background-color: lightgray;
   padding: 20px;
+}
+
+.folder {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  color: #fff; /* Default color */
+  transition: transform 0.3s, box-shadow 0.3s, color 0.3s;
+  margin: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.folder i {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 10px;
+  color: #f0a500; /* Yellow color */
+}
+
+.folder:hover {
+  transform: scale(1.08);
+  color: #f0a500; /* Yellow color on hover */
+}
+
+.folder-name {
+  font-size: 14px;
+}
+
+.backbutton {
+  display: inline-block;
+  font-size: 20px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  outline: none;
+}
+
+.backbutton:hover {
+  transform: scale(1.08);
+}
+
+.backbutton i {
+  font-size: 24px;
+}
+
+/* Prevent hand cursor on hover */
+.backbutton:hover {
+  cursor: pointer;
+}
+
+a.upload-icon i {
+  font-size: 50px;
+  cursor: pointer;
 }

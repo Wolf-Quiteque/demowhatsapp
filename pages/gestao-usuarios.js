@@ -2,6 +2,9 @@ import Head from "next/head";
 
 import { useRef, useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { useRouter } from "next/router";
+import { getDecryptedCookie, setEncryptedCookie } from "../lib/session";
+
 import "react-toastify/dist/ReactToastify.css";
 import makeid from "../lib/random";
 
@@ -21,16 +24,20 @@ export default function GestaoUsuarios() {
 
   var toaststate;
   var pagesarray = [];
+  const router = useRouter();
 
   const Getusuarios = async () => {
+    var filter = Info;
+    filter.tipo = "administrador";
     const res = await fetch("/api/usuarios/allusers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+
       body: JSON.stringify({
         page: page,
-        info: Info,
+        info: filter,
       }),
     });
     const data = await res.json();
@@ -43,10 +50,29 @@ export default function GestaoUsuarios() {
     setpages(pagesarray);
   };
 
+  const getsesh = async () => {
+    const response = await getDecryptedCookie("authsesh");
+    if (response) {
+      if (response.tipo == "administrador") {
+        setusuario(response);
+      } else {
+        router.replace("/");
+      }
+    } else {
+      router.replace("/");
+    }
+  };
+
   useEffect(() => {
     setusuarios(null);
     Getusuarios();
   }, [page, Info, reload]);
+
+  useEffect(() => {
+    if (!usuario) {
+      getsesh();
+    }
+  }, []);
 
   const Prev = () => {
     if (page == 1) {
@@ -76,12 +102,13 @@ export default function GestaoUsuarios() {
         }),
       });
       const data = await res.json();
+      Getusuarios();
       toast.update(toaststate, {
         render: data.message,
         type: "success",
         isLoading: false,
         closeOnClick: true,
-        autoClose: false,
+        autoClose: 1300,
       });
     } catch (err) {
       const data = await res.json();
@@ -90,9 +117,12 @@ export default function GestaoUsuarios() {
         type: "error",
         isLoading: false,
         closeOnClick: true,
-        autoClose: false,
+        autoClose: 1300,
       });
     }
+    setloading(false);
+
+    $("#eliminar").modal("hide");
   };
 
   const Cadastrar = async () => {
@@ -109,25 +139,28 @@ export default function GestaoUsuarios() {
           email: email.toLowerCase(),
           cargo: cargo,
           nome: nome,
+          tipo: "administrador",
         }),
       });
-      const data = await res.json();
+      setloading(false);
       toast.update(toaststate, {
         render: data.message,
         type: "success",
         isLoading: false,
         closeOnClick: true,
-        autoClose: false,
+        autoClose: 1300,
       });
     } catch (err) {
-      const data = await res.json();
       toast.update(toaststate, {
         render: data.message,
         type: "error",
         isLoading: false,
         closeOnClick: true,
-        autoClose: false,
+        autoClose: 1300,
       });
+      setloading(false);
+
+      $("#novo").modal("hide");
     }
 
     const data = await res.json();
@@ -136,7 +169,7 @@ export default function GestaoUsuarios() {
       type: "success",
       isLoading: false,
       closeOnClick: true,
-      autoClose: false,
+      autoClose: 1300,
     });
     setreload(makeid());
     setloading(false);
@@ -145,7 +178,7 @@ export default function GestaoUsuarios() {
   return (
     <div className="container">
       <Head>
-        <title>Gestão do Usuário</title>
+        <title>ANJE - Gestão do Usuário</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -187,10 +220,8 @@ export default function GestaoUsuarios() {
                 <table className="table table-hover text-nowrap">
                   <thead>
                     <tr>
-                      <th>ID</th>
                       <th>Nome</th>
                       <th>Cargo</th>
-                      <th>Email</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -198,10 +229,8 @@ export default function GestaoUsuarios() {
                       usuarios.map((e) =>
                         e.cargo != "Admin" ? (
                           <tr>
-                            <td>{e._id.substring(0, 9)}</td>
                             <td>{e.nome}</td>
                             <td>{e.cargo}</td>
-                            <td>{e.email}</td>
                             <td>
                               {" "}
                               <button

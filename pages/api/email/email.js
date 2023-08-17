@@ -2,38 +2,25 @@ const nodemailer = require("nodemailer");
 import clientPromise from "../../../lib/mongodb";
 import { ObjectId } from "bson";
 import makeid from "../../../lib/random";
-export default async function handler(req, res) {
+export default async function handlerMail(req) {
   const senha = makeid();
-  var id = req.body._id;
-
+  console.log(req);
   const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
+    host: "smtp.titan.email",
     port: 465,
     secure: true,
     auth: {
-      user: "cumbisik@gmail.com",
-      pass: "itxiuznnjwxwgsza",
+      user: "geral@anjeangola.com",
+      pass: "Aldasayene1@2023",
     },
   });
-
-  const Approved = async () => {
-    const cliente = await clientPromise;
-    const db = cliente.db("glab_admin");
-
-    await db
-      .collection("cumbigroup")
-      .updateOne(
-        { _id: new ObjectId(req.body._id) },
-        { $set: { emailSent: true, senha: senha } }
-      );
-  };
 
   async function sendMail() {
     try {
       await transporter.sendMail({
-        from: "Cumbi Group",
-        to: req.body.email,
-        subject: "Parabéns! Você foi aprovado para participar do evento",
+        from: "ANJE ANGOLA",
+        to: req.email,
+        subject: req.title,
         html: `
         <!DOCTYPE html>
         <html
@@ -255,26 +242,29 @@ export default async function handler(req, res) {
                 <![endif]-->
               <div
                 style="
-                  background: url(https://www.cumbigroup.com/images/BG-3.1.png) top
+                  background: url(https://anjeangola.com/assets/img/logo.png) top
                     center / cover no-repeat;
                   margin: 0px auto;
                   border-radius: 20px 20px 0 0;
                   max-width: 600px;
+                  background-color:'black'
                 "
               >
                 <div style="line-height: 0; font-size: 0">
                   <table
                     align="center"
-                    background="https://www.cumbigroup.com/images/BG-3.1.png"
+                    background="https://anjeangola.com/assets/img/logo.png"
                     border="0"
                     cellpadding="0"
                     cellspacing="0"
                     role="presentation"
                     style="
-                      background: url(https://www.cumbigroup.com/images/BG-3.1.png) top
+                      background: url(https://anjeangola.com/assets/img/logo.png) top
                         center / cover no-repeat;
                       width: 100%;
                       border-radius: 20px 20px 0 0;
+                  background-color:'black'
+
                     "
                   >
                     <tbody>
@@ -492,9 +482,7 @@ export default async function handler(req, res) {
                                       "
                                     >
                                       Saudações ${
-                                        req.body.firstName +
-                                        " " +
-                                        req.body.lastName
+                                        req.firstName + " " + req.lastName
                                       }
                                     </h2>
                                   </div>
@@ -543,23 +531,22 @@ export default async function handler(req, res) {
                                   >
                                     <p style="margin: 0">
                                       <strong>
-                                        É com grande satisfação que informamos que a empresa ${
-                                          req.body.companyName
-                                        }
-                                        foi aprovado para participar da Conferência 
-                                        "Todo sonho tem um preço" com direito a ${
-                                          req.body.numParticipants
-                                        } membro(s) nos dias 1 e 2 de
-                                        junho. Parabéns!</strong
-                                      >
+                                      
+      Parabéns! É com grande alegria que informamos que você foi escolhido para desempenhar um papel fundamental na área administrativa da AJNE ANGOLA. Sua dedicação e competência foram reconhecidas, e estamos ansiosos para ver suas contribuições enriquecerem nossa equipe.
+      cargo: ${req.body.cargo}
 
-                                    </p>
-                                    <p style="color: #d4af37;"> CODIGO:<strong> ${senha} </strong></p>
-                                    <p style="color:red"> <strong> certifique-se de ter este código com você, 
-                                    ele será necessário para acessar a conferência.
-                                     este código permitirá apenas o acesso de ${
-                                       req.body.numParticipants
-                                     } membro(s). </strong></p>
+      Aqui estão suas credenciais de acesso ao portal:
+
+      Email: ${req.body.email.toLowerCase()}
+      Senha: ${userpassword}
+      Acesse o portal através deste link: <a href='http://portal-eta-eight.vercel.app/' >http://portal-eta-eight.vercel.app/ </a>
+
+      Mais uma vez, parabéns por essa conquista merecida. Estamos confiantes de que você terá um impacto positivo em nossa organização.
+
+      Desejamos a você todo o sucesso em sua nova função!
+
+      Atenciosamente,
+                                        </strong></p>
                                   </div>
                                 </td>
                               </tr>
@@ -910,11 +897,10 @@ export default async function handler(req, res) {
         `,
       });
 
-      const message = await Approved();
-      res.json(message);
+      console.log(message);
+      return message;
     } catch (error) {
       console.error(error);
-      res.json("error");
     }
   }
 

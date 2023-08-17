@@ -9,6 +9,7 @@ export default function Layout({ children }) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [usuario, setusuario] = useState(null);
+  const [newstatus, setnewstatus] = useState("");
 
   const getsession = async () => {
     if (status === "unauthenticated") {
@@ -52,11 +53,12 @@ export default function Layout({ children }) {
     if (status == "authenticated" && usuario == null) {
       getuser();
     }
+    setnewstatus(status);
   }, [status, session]);
 
   return (
     <div className="wrapper">
-      {status == "authenticated" ? (
+      {newstatus == "authenticated" ? (
         router.pathname != "/empresa/[empresa_id]" ? (
           <>
             <div
@@ -70,7 +72,7 @@ export default function Layout({ children }) {
                   : "login-page-activo"
               }
             >
-              <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+              <nav className="main-header navbar navbar-expand navbar-white navbar-light fixed-top">
                 <ul className="navbar-nav">
                   <li className="nav-item">
                     <a
@@ -80,16 +82,6 @@ export default function Layout({ children }) {
                       role="button"
                     >
                       <i className="fas fa-bars"></i>
-                    </a>
-                  </li>
-                  <li className="nav-item d-none d-sm-inline-block">
-                    <a href="index3.html" className="nav-link">
-                      Home
-                    </a>
-                  </li>
-                  <li className="nav-item d-none d-sm-inline-block">
-                    <a href="#" className="nav-link">
-                      Contact
                     </a>
                   </li>
                 </ul>
@@ -243,14 +235,16 @@ export default function Layout({ children }) {
               </nav>
 
               <aside className="main-sidebar sidebar-dark-primary elevation-4 ">
-                <a href="index3.html" class="brand-link">
-                  <img
-                    src="img/logo.png"
-                    alt="ANJE"
-                    className="img-fluid"
-                    style={{ opacity: " .8" }}
-                  />
-                </a>
+                <Link href="/">
+                  <a class="brand-link">
+                    <img
+                      src="img/logo.png"
+                      alt="ANJE"
+                      className="img-fluid"
+                      style={{ opacity: " .8" }}
+                    />
+                  </a>
+                </Link>
 
                 <div className="sidebar">
                   <div className="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -291,14 +285,44 @@ export default function Layout({ children }) {
                       role="menu"
                       data-accordion="false"
                     >
-                      <li className="nav-header">Gerir</li>
+                      <li className="nav-header">Gestão Administrativo</li>
 
                       <li className="nav-item">
-                        <a href="/" className="nav-link">
-                          <i className="nav-icon fas fa-address-book"></i>
-                          <p>Registros</p>
+                        <Link href="/gestao-usuarios">
+                          <a className="nav-link">
+                            <i className="nav-icon fas fa-users"></i>
+                            <p>Administradores</p>
+                          </a>
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link href="/recursos">
+                          <a className="nav-link">
+                            <i className="nav-icon fas fa-book"></i>
+                            <p>Recursos</p>
+                          </a>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <a href="#" className="nav-link">
+                          <i className="nav-icon fas fa-microphone"></i>
+                          <p>Anúncios</p>
                         </a>
                       </li>
+                      <li className="nav-item">
+                        <a href="#" className="nav-link">
+                          <i className="nav-icon fas fa-calendar-alt"></i>
+                          <p>Eventos</p>
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a href="#" className="nav-link">
+                          <i className="nav-icon fas fa-image"></i>
+                          <p>Galeria</p>
+                        </a>
+                      </li>
+
                       <li className="nav-header">Configurações</li>
 
                       {/* <li className="nav-item">
@@ -315,18 +339,20 @@ export default function Layout({ children }) {
               </aside>
               <div className="content-wrapper">
                 <div className="content">
-                  <div className="">{children}</div>
+                  <div className="" style={{ marginTop: "60px" }}>
+                    {newstatus == "authenticated" && children}
+                  </div>
                 </div>
               </div>
             </div>
           </>
         ) : (
-          <div id="hero" className="login-page-activo">
+          <div id="hero" className="containerNew login-page-activo">
             {children}
           </div>
         )
       ) : (
-        <div className="container">{children}</div>
+        <div className="containerNew">{children}</div>
       )}
       <aside className="control-sidebar control-sidebar-dark"></aside>
     </div>

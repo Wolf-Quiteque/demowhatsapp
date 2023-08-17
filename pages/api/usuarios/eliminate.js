@@ -9,7 +9,7 @@ async function handler(req, res) {
   const { id } = data;
 
   const client = await clientPromise;
-  const db = client.db("myFirstDatabase");
+  const db = client.db("anje");
   const result = await db
     .collection("usuarios")
     .deleteOne({ _id: new ObjectId(id) });
