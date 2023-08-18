@@ -121,9 +121,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!usuario) {
-      getsesh();
-    }
     const changeimg = () => {
       if (file) {
         setimgselected(URL.createObjectURL(file));
@@ -131,8 +128,10 @@ export default function Home() {
     };
     changeimg();
   }, [file]);
+
   useEffect(() => {
     getposts();
+    getsesh();
   }, []);
   return (
     <>
