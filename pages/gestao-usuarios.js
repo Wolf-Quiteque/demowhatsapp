@@ -142,6 +142,9 @@ export default function GestaoUsuarios() {
           tipo: "administrador",
         }),
       });
+      const data = await res.json();
+      Getusuarios();
+
       setloading(false);
       toast.update(toaststate, {
         render: data.message,
@@ -152,7 +155,7 @@ export default function GestaoUsuarios() {
       });
     } catch (err) {
       toast.update(toaststate, {
-        render: data.message,
+        render: err,
         type: "error",
         isLoading: false,
         closeOnClick: true,
@@ -456,6 +459,7 @@ export default function GestaoUsuarios() {
                   <button
                     type="button"
                     className="btn btn-primary"
+                    data-dismiss="modal"
                     onClick={() => {
                       Cadastrar();
                     }}
