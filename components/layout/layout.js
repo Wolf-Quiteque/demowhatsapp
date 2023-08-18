@@ -285,17 +285,54 @@ export default function Layout({ children }) {
                       role="menu"
                       data-accordion="false"
                     >
-                      <li className="nav-header">Gestão Administrativo</li>
+                      {usuario && usuario.tipo == "administrador" && (
+                        <>
+                          <li className="nav-header">Gestão Administrativo</li>
 
-                      <li className="nav-item">
-                        <Link href="/gestao-usuarios">
-                          <a className="nav-link">
-                            <i className="nav-icon fas fa-users"></i>
-                            <p>Administradores</p>
-                          </a>
-                        </Link>
-                      </li>
+                          <li className="nav-item">
+                            <Link href="/gestao-usuarios">
+                              <a className="nav-link">
+                                <i className="nav-icon fas fa-users"></i>
+                                <p>Administradores</p>
+                              </a>
+                            </Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link href="/inscricoes">
+                              <a className="nav-link">
+                                <i className="nav-icon fas fa-pencil-alt"></i>
+                                <p>Inscrições</p>
+                              </a>
+                            </Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link href="/recursos">
+                              <a className="nav-link">
+                                <i className="nav-icon fas fa-book"></i>
+                                <p>Recursos</p>
+                              </a>
+                            </Link>
+                          </li>
 
+                          <li className="nav-item">
+                            <Link href="/brevemente">
+                              <a className="nav-link">
+                                <i className="nav-icon fas fa-calendar-alt"></i>
+                                <p>Eventos</p>
+                              </a>
+                            </Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link href="/brevemente">
+                              <a href="#" className="nav-link">
+                                <i className="nav-icon fas fa-image"></i>
+                                <p>Galeria</p>
+                              </a>
+                            </Link>
+                          </li>
+                        </>
+                      )}
+                      <li className="nav-header">Ferramentas e Recursos</li>
                       <li className="nav-item">
                         <Link href="/recursos">
                           <a className="nav-link">
@@ -305,25 +342,22 @@ export default function Layout({ children }) {
                         </Link>
                       </li>
                       <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="nav-icon fas fa-microphone"></i>
-                          <p>Anúncios</p>
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="nav-icon fas fa-calendar-alt"></i>
-                          <p>Eventos</p>
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="nav-icon fas fa-image"></i>
-                          <p>Galeria</p>
-                        </a>
+                        <Link href="/brevemente">
+                          <a className="nav-link">
+                            <i className="nav-icon fas fa-brain"></i>
+                            <p>Inteligência artificial</p>
+                          </a>
+                        </Link>
                       </li>
 
-                      <li className="nav-header">Configurações</li>
+                      <li className="nav-item">
+                        <Link href="/brevemente">
+                          <a href="#" className="nav-link">
+                            <i className="nav-icon fas fa-briefcase"></i>
+                            <p>Gestor de Tarefas</p>
+                          </a>
+                        </Link>
+                      </li>
 
                       {/* <li className="nav-item">
                       <Link href="/gestao-usuarios">

@@ -24,15 +24,7 @@ export default function Home() {
 
   const getsesh = async () => {
     const response = await getDecryptedCookie("authsesh");
-    if (response) {
-      if (response.tipo == "administrador") {
-        setusuario(response);
-      } else {
-        router.replace("/");
-      }
-    } else {
-      router.replace("/");
-    }
+    setusuario(response);
   };
 
   const selectfolder = async (colecao) => {
@@ -202,35 +194,42 @@ export default function Home() {
             style={{ marginTop: "30px", marginBottom: "30px" }}
           >
             <h1>{titulo ? titulo : "Recursos"}</h1>
-            {titulo ? (
-              <>
-                <a
-                  className="backbutton  float-right"
-                  onClick={() => {
-                    settitulo("");
-                    setassets(null);
-                  }}
-                >
-                  <i className="fa fa-arrow-left"></i>
-                </a>
-                <a
-                  className="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#upload"
-                  onClick={() => {}}
-                >
-                  Carregar ficheiros
-                </a>
-              </>
-            ) : (
-              <button
-                className="btn btn-success btn-sm float-right"
-                data-toggle="modal"
-                data-target="#novo"
+            {titulo && (
+              <a
+                className="backbutton  float-right"
+                onClick={() => {
+                  settitulo("");
+                  setassets(null);
+                }}
               >
-                Nova Coleção <i className="fas fa-plus"></i>
-              </button>
+                <i className="fa fa-arrow-left"></i>
+              </a>
             )}
+            <>
+              {usuario &&
+                usuario.tipo == "administrador" &&
+                (titulo ? (
+                  <>
+                    {" "}
+                    <a
+                      className="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#upload"
+                      onClick={() => {}}
+                    >
+                      Carregar ficheiros
+                    </a>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-success btn-sm float-right"
+                    data-toggle="modal"
+                    data-target="#novo"
+                  >
+                    Nova Coleção <i className="fas fa-plus"></i>
+                  </button>
+                ))}
+            </>
           </div>
           <div className="row">
             {titulo ? (

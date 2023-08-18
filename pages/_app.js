@@ -21,7 +21,7 @@ export default function App({
     } else {
       const element = document.querySelector("body");
       element.classList.remove("login-page");
-      element.classList.add("hold-transition", "sidebar-mini", "layout-fixed");
+      element.classList.add("sidebar-mini", "layout-fixed", "auto");
     }
   }, [router]);
   return (

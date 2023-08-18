@@ -37,7 +37,7 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/usuarios/novo", {
+      const res = await fetch("/api/usuarios/novomembro", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,8 +54,8 @@ export default function Register() {
             return false;
           },
         });
-
         setLoading(false);
+
         return false;
       }
     } catch (error) {
@@ -71,7 +71,7 @@ export default function Register() {
     setTimeout(() => {
       setLoading(false);
       toast.success(
-        "Registo concluído com sucesso! As credenciais serão enviadas para o seu e-mail. Obrigado.",
+        "Obrigado, caso fou aprovado As credenciais serão enviadas para o seu e-mail. Obrigado.(verifique no spam tambem)",
         {
           autoClose: 4000,
           onClose: () => {
