@@ -9,6 +9,16 @@ export default function Register() {
   const router = useRouter();
   var user = {};
   const [loading, setLoading] = useState(false);
+  const [tipoconta,settipoconta] = useState("")
+  const [file, setfile] = useState(null);
+
+  const [nome, setnome] = useState("");
+  const [ultimoNome, setultimoNome] = useState("");
+  const [bi, setbi] = useState("");
+  const [classe, setclasse] = useState("");
+
+
+
   const provincesList = [
     "Bengo",
     "Benguela",
@@ -30,11 +40,31 @@ export default function Register() {
     "Zaire",
   ];
   const onFormSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
+    const data = new FormData();
+    const fileName = Date.now() + file.name;
+    data.append("file", file);
+    data.append("name", fileName);
+    data.append("upload_preset", "ipo-uploads");
 
+    const result = await fetch(
+      "https://api.cloudinary.com/v1_1/quitopia/image/upload",
+      {
+        method: "Post",
+        body: data,
+      }
+    ).then((r) => r.json());
+
+      user.comprovativo = result.secure_url,
     user.tipo = "membro";
     user.conta = "pendente";
-    setLoading(true);
+    user.nome = nome;
+    user.bi = bi;
+    user.ultimonome = ultimoNome
+    user.tipo = tipoconta;
+    user.classe = classe
+
 
     try {
       const res = await fetch("/api/usuarios/novomembro", {
@@ -54,7 +84,7 @@ export default function Register() {
             return false;
           },
         });
-        setLoading(false);
+      
 
         return false;
       }
@@ -100,14 +130,25 @@ export default function Register() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Nome"
-                  onChange={(e) => {
-                    user.nome = e.target.value;
+                  placeholder="N° BI"
+              onChange={(e) => {
+                  
+                   setbi(e.target.value)
                   }}
                   required
                 />
               </div>
-
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Nome"
+                  onChange={(e) => {
+                    setnome(e.target.value)
+                  }}
+                  required
+                />
+              </div>
               {/* Último Nome */}
               <div className="mb-3">
                 <input
@@ -115,11 +156,83 @@ export default function Register() {
                   className="form-control"
                   placeholder="Último Nome"
                   onChange={(e) => {
-                    user.ultimoNome = e.target.value;
+                   setultimoNome(e.target.value)
                   }}
                   required
                 />
               </div>
+
+        <div className="mb-3">
+          <select  className="form-control" onChange={(e)=>{
+            user.tipoconta = e.target.value;
+            settipoconta(e.target.value)
+          }} required>
+            <option value="">
+              Tipo de Conta
+            </option>
+            <option value="Membro">
+              Membro
+              </option>
+              <option value="Parceiro">
+                Parcerio
+              </option>
+                
+
+
+
+          </select>
+        </div>
+
+
+            {tipoconta !="" &&(<>
+            
+              <div className="mb-3">
+  <select className="form-control" 
+  onChange={(e)=>{
+  setclasse(e.target.value)
+  }}
+  required >
+
+  <option value="">
+                Selecione um classe
+            </option>
+           {tipoconta == "Membro" &&(<> <option value="Platina">
+              Platina - 35.000,00 kz
+              </option>
+              <option value="Diamante">
+              Diamante - 20.000,00 kz
+              </option>
+              <option value="Ouro">
+              Ouro - 10.000,00 kz
+              </option>
+              <option value="Prata">
+              Prata - 5.000,00 kz
+              </option></>)}
+
+              {tipoconta == "Parceiro" &&(<> <option value="Platina">
+              Platina - 100.000,00 kz
+              </option>
+              <option value="Diamante">
+              Diamante - 75.000,00 kz
+              </option>
+              <option value="Ouro">
+              Ouro - 50.000,00 kz
+              </option>
+              <option value="Prata">
+              Prata - 35.000,00 kz
+              </option></>)}
+
+              
+
+  </select>
+</div>
+            </>)}
+
+            <div className="mb-3">
+<label for="exampleInputFile">Comprovativo</label>
+<input type="file" id="exampleInputFile" required   accept=".pdf,.jpg,.png,.jpeg"
+                  onChange={(e) => setfile(e.target.files[0])} />
+</div>
 
               {/* Email */}
               <div className="mb-3">
@@ -169,6 +282,8 @@ export default function Register() {
 
               {/* Data de Nascimento */}
               <div className="mb-3">
+<label for="exampleInputFile">Data de Nascimento</label>
+
                 <input
                   type="date"
                   className="form-control"
