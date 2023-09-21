@@ -42,7 +42,8 @@ export default function Register() {
   const onFormSubmit = async (e) => {
     setLoading(true)
     e.preventDefault();
-    const data = new FormData();
+    if(file){
+      const data = new FormData();
     const fileName = Date.now() + file.name;
     data.append("file", file);
     data.append("name", fileName);
@@ -55,8 +56,10 @@ export default function Register() {
         body: data,
       }
     ).then((r) => r.json());
+    user.comprovativo = result.secure_url
+    }
 
-      user.comprovativo = result.secure_url,
+      
     user.tipo = "membro";
     user.conta = "pendente";
     user.nome = nome;
@@ -230,7 +233,7 @@ export default function Register() {
 
             <div className="mb-3">
 <label for="exampleInputFile">Comprovativo</label>
-<input type="file" id="exampleInputFile" required   accept=".pdf,.jpg,.png,.jpeg"
+<input type="file" id="exampleInputFile"    accept=".pdf,.jpg,.png,.jpeg"
                   onChange={(e) => setfile(e.target.files[0])} />
 </div>
 
