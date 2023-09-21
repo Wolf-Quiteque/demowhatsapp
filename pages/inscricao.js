@@ -339,11 +339,11 @@ export default function Register() {
                   >
                     {loading ? "Aguarde..." : "Registar"}
                   </button>
-                  <Link href="/login">
+                  {!loading && ( <Link href="/login">
                     <a className="btn btn-xs btn-warning btn-block">
                       Iniciar Sessão
                     </a>
-                  </Link>
+                  </Link>)}
                 </div>
               </div>
             </form>
