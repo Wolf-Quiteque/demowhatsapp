@@ -9,15 +9,13 @@ export default function Register() {
   const router = useRouter();
   var user = {};
   const [loading, setLoading] = useState(false);
-  const [tipoconta,settipoconta] = useState("")
+  const [tipoconta, settipoconta] = useState("");
   const [file, setfile] = useState(null);
 
   const [nome, setnome] = useState("");
   const [ultimoNome, setultimoNome] = useState("");
   const [bi, setbi] = useState("");
   const [classe, setclasse] = useState("");
-
-
 
   const provincesList = [
     "Bengo",
@@ -40,34 +38,32 @@ export default function Register() {
     "Zaire",
   ];
   const onFormSubmit = async (e) => {
-    setLoading(true)
+    setLoading(true);
     e.preventDefault();
-    if(file){
+    if (file) {
       const data = new FormData();
-    const fileName = Date.now() + file.name;
-    data.append("file", file);
-    data.append("name", fileName);
-    data.append("upload_preset", "ipo-uploads");
+      const fileName = Date.now() + file.name;
+      data.append("file", file);
+      data.append("name", fileName);
+      data.append("upload_preset", "ipo-uploads");
 
-    const result = await fetch(
-      "https://api.cloudinary.com/v1_1/quitopia/image/upload",
-      {
-        method: "Post",
-        body: data,
-      }
-    ).then((r) => r.json());
-    user.comprovativo = result.secure_url
+      const result = await fetch(
+        "https://api.cloudinary.com/v1_1/quitopia/image/upload",
+        {
+          method: "Post",
+          body: data,
+        }
+      ).then((r) => r.json());
+      user.comprovativo = result.secure_url;
     }
 
-      
     user.tipo = "membro";
     user.conta = "pendente";
     user.nome = nome;
     user.bi = bi;
-    user.ultimonome = ultimoNome
+    user.ultimonome = ultimoNome;
     user.tipo = tipoconta;
-    user.classe = classe
-
+    user.classe = classe;
 
     try {
       const res = await fetch("/api/usuarios/novomembro", {
@@ -87,7 +83,6 @@ export default function Register() {
             return false;
           },
         });
-      
 
         return false;
       }
@@ -134,9 +129,8 @@ export default function Register() {
                   type="text"
                   className="form-control"
                   placeholder="N° BI"
-              onChange={(e) => {
-                  
-                   setbi(e.target.value)
+                  onChange={(e) => {
+                    setbi(e.target.value);
                   }}
                   required
                 />
@@ -147,7 +141,7 @@ export default function Register() {
                   className="form-control"
                   placeholder="Nome"
                   onChange={(e) => {
-                    setnome(e.target.value)
+                    setnome(e.target.value);
                   }}
                   required
                 />
@@ -159,83 +153,88 @@ export default function Register() {
                   className="form-control"
                   placeholder="Último Nome"
                   onChange={(e) => {
-                   setultimoNome(e.target.value)
+                    setultimoNome(e.target.value);
                   }}
                   required
                 />
               </div>
 
-        <div className="mb-3">
-          <select  className="form-control" onChange={(e)=>{
-            user.tipoconta = e.target.value;
-            settipoconta(e.target.value)
-          }} required>
-            <option value="">
-              Tipo de Conta
-            </option>
-            <option value="Membro">
-              Membro
-              </option>
-              <option value="Parceiro">
-                Parcerio
-              </option>
-                
-
-
-
-          </select>
-        </div>
-
-
-            {tipoconta !="" &&(<>
-            
               <div className="mb-3">
-  <select className="form-control" 
-  onChange={(e)=>{
-  setclasse(e.target.value)
-  }}
-  required >
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    user.tipoconta = e.target.value;
+                    settipoconta(e.target.value);
+                  }}
+                  required
+                >
+                  <option value="">Tipo de Conta</option>
+                  <option value="Membro">Membro</option>
+                  <option value="Parceiro">Parcerio</option>
+                </select>
+              </div>
 
-  <option value="">
-                Selecione um classe
-            </option>
-           {tipoconta == "Membro" &&(<> <option value="Platina">
-              Platina - 35.000,00 kz
-              </option>
-              <option value="Diamante">
-              Diamante - 20.000,00 kz
-              </option>
-              <option value="Ouro">
-              Ouro - 10.000,00 kz
-              </option>
-              <option value="Prata">
-              Prata - 5.000,00 kz
-              </option></>)}
+              {tipoconta != "" && (
+                <>
+                  <div className="mb-3">
+                    <select
+                      className="form-control"
+                      onChange={(e) => {
+                        setclasse(e.target.value);
+                      }}
+                      required
+                    >
+                      <option value="">Selecione um classe</option>
+                      {tipoconta == "Membro" && (
+                        <>
+                          {" "}
+                          <option value="Platina">
+                            Platina - 35.000,00 kz
+                          </option>
+                          <option value="Diamante">
+                            Diamante - 20.000,00 kz
+                          </option>
+                          <option value="Ouro">Ouro - 10.000,00 kz</option>
+                          <option value="Prata">Prata - 5.000,00 kz</option>
+                        </>
+                      )}
 
-              {tipoconta == "Parceiro" &&(<> <option value="Platina">
-              Platina - 100.000,00 kz
-              </option>
-              <option value="Diamante">
-              Diamante - 75.000,00 kz
-              </option>
-              <option value="Ouro">
-              Ouro - 50.000,00 kz
-              </option>
-              <option value="Prata">
-              Prata - 35.000,00 kz
-              </option></>)}
+                      {tipoconta == "Parceiro" && (
+                        <>
+                          {" "}
+                          <option value="Platina">
+                            Platina - 100.000,00 kz
+                          </option>
+                          <option value="Diamante">
+                            Diamante - 75.000,00 kz
+                          </option>
+                          <option value="Ouro">Ouro - 50.000,00 kz</option>
+                          <option value="Prata">Prata - 35.000,00 kz</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
+                </>
+              )}
 
-              
-
-  </select>
-</div>
-            </>)}
-
-            <div className="mb-3">
-<label for="exampleInputFile">Comprovativo</label>
-<input type="file" id="exampleInputFile"    accept=".pdf,.jpg,.png,.jpeg"
-                  onChange={(e) => setfile(e.target.files[0])} />
-</div>
+              <div className="mb-3">
+                <div>
+                  <span>Coordenadas báncarias: </span>
+                </div>
+                <div>
+                  <span>AO06006600000676366110127</span>
+                </div>
+                <div>
+                  <span>ANJE ANGOLA ASS N P C J EMPRESARIOS</span>
+                </div>
+                <label for="exampleInputFile">Comprovativo</label>
+                <input
+                  type="file"
+                  id="exampleInputFile"
+                  accept=".pdf,.jpg,.png,.jpeg"
+                  onChange={(e) => setfile(e.target.files[0])}
+                />
+              </div>
 
               {/* Email */}
               <div className="mb-3">
@@ -285,7 +284,7 @@ export default function Register() {
 
               {/* Data de Nascimento */}
               <div className="mb-3">
-<label for="exampleInputFile">Data de Nascimento</label>
+                <label for="exampleInputFile">Data de Nascimento</label>
 
                 <input
                   type="date"
@@ -339,11 +338,13 @@ export default function Register() {
                   >
                     {loading ? "Aguarde..." : "Registar"}
                   </button>
-                  {!loading && ( <Link href="/login">
-                    <a className="btn btn-xs btn-warning btn-block">
-                      Iniciar Sessão
-                    </a>
-                  </Link>)}
+                  {!loading && (
+                    <Link href="/login">
+                      <a className="btn btn-xs btn-warning btn-block">
+                        Iniciar Sessão
+                      </a>
+                    </Link>
+                  )}
                 </div>
               </div>
             </form>
