@@ -9,31 +9,42 @@ export default async function handler(req, res) {
 
   const data = req.body;
   const { page, info } = data;
-
-  var perPage = 6;
+  console.log(data);
+  const perPage = 6;
+  const currentPage = page || 1;
 
   const db = cliente.db("anje");
-  // total number of records from database
-  var total = await db.collection("usuarios").count();
 
-  // Calculating number of pagination links required
-  var pages = Math.ceil(total / perPage);
+  try {
+    const pipeline = [];
 
-  // get current page number
-  var pageNumber = page == null ? 1 : page;
+    // Match stage for your filter criteria
+    if (info) {
+      pipeline.push({ $match: info });
+    }
 
-  // get records to skip
-  var startFrom = (pageNumber - 1) * perPage;
+    // Sort by email in ascending order (modify if you want descending order)
+    pipeline.push({ $sort: { email: 1 } });
 
-  // get data from mongo DB using pagination
+    // Skip and limit based on pagination
+    pipeline.push({ $skip: (currentPage - 1) * perPage });
+    pipeline.push({ $limit: perPage });
 
-  var resul = await db
-    .collection("usuarios")
-    .find(info)
-    .sort({ id: -1 })
-    .skip(startFrom)
-    .limit(perPage)
-    .toArray();
+    // Execute the aggregation pipeline
+    const results = await db
+      .collection("usuarios")
+      .aggregate(pipeline)
+      .toArray();
 
-  res.json({ pages: pages, usuarios: resul });
+    // Get the total count without pagination
+    const total = await db.collection("usuarios").countDocuments(info);
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(total / perPage);
+
+    res.json({ pages: totalPages, usuarios: results });
+  } catch (error) {
+    console.error("Error in pagination:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 }

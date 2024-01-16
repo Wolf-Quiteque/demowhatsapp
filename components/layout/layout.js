@@ -326,12 +326,19 @@ export default function Layout({ children }) {
                               </a>
                             </Link>
                           </li>
-
                           <li className="nav-item">
                             <Link href="/brevemente">
                               <a className="nav-link">
+                                <i className="nav-icon fas fa-users-cog"></i>
+                                <p>Membros</p>
+                              </a>
+                            </Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link href="/noticias">
+                              <a className="nav-link">
                                 <i className="nav-icon fas fa-calendar-alt"></i>
-                                <p>Eventos</p>
+                                <p>Notiçias</p>
                               </a>
                             </Link>
                           </li>
@@ -354,7 +361,7 @@ export default function Layout({ children }) {
                           </a>
                         </Link>
                       </li>
-                      <li className="nav-item">
+                      {/* <li className="nav-item">
                         <Link href="/brevemente">
                           <a className="nav-link">
                             <i className="nav-icon fas fa-brain"></i>
@@ -370,7 +377,7 @@ export default function Layout({ children }) {
                             <p>Gestor de Tarefas</p>
                           </a>
                         </Link>
-                      </li>
+                      </li> */}
 
                       {/* <li className="nav-item">
                       <Link href="/gestao-usuarios">

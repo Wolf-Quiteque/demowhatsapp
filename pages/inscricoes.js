@@ -19,6 +19,8 @@ export default function GestaoUsuarios() {
   const [loading, setloading] = useState(false);
   const [membros, setmembros] = useState([]);
   const [Info, setinfo] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   var toaststate;
   var pagesarray = [];
@@ -26,7 +28,6 @@ export default function GestaoUsuarios() {
 
   const Getusuarios = async () => {
     var filter = Info;
-    filter.tipo = "membro";
     filter.conta = "pendente";
 
     const res = await fetch("/api/usuarios/allusers", {
@@ -34,20 +35,14 @@ export default function GestaoUsuarios() {
       headers: {
         "Content-Type": "application/json",
       },
-
       body: JSON.stringify({
-        page: page,
+        page: currentPage,
         info: filter,
       }),
     });
     const data = await res.json();
     setmembros(data.usuarios);
-    setnopages(data.pages);
-    for (let index = 0; index < data.pages; index++) {
-      var number = Number(index) + 1;
-      pagesarray.push({ page: number });
-    }
-    setpages(pagesarray);
+    setTotalPages(data.pages);
   };
 
   const getsesh = async () => {
@@ -66,7 +61,7 @@ export default function GestaoUsuarios() {
   useEffect(() => {
     setusuarios(null);
     Getusuarios();
-  }, [page, Info]);
+  }, [page, Info, currentPage]);
 
   useEffect(() => {
     if (!usuario) {
@@ -182,7 +177,55 @@ export default function GestaoUsuarios() {
 
         <div className="row">
           <div className="col-md-12">
-            <h3 className="mt-3 mb-3">Inscrições de novo membros</h3>
+            {/* <h3 className="mt-3 mb-3">Inscrições de novo membros</h3> */}
+          </div>
+
+          <div className="col-md-3 mb-3 mt-3">
+            <h4>
+              <i className="fa fa-search"> </i> Pesquisar
+            </h4>
+          </div>
+          <div className="col-md-3 mb-3 mt-3">
+            <input
+              className="form-control"
+              placeholder="Nome"
+              onChange={(e) => {
+                setinfo({
+                  nome: {
+                    $regex: ".*" + e.target.value + ".*",
+                    $options: "i",
+                  },
+                });
+              }}
+            />
+          </div>
+          <div className="col-md-3 mb-3 mt-3">
+            <input
+              className="form-control"
+              onChange={(e) => {
+                setinfo({
+                  email: {
+                    $regex: ".*" + e.target.value + ".*",
+                    $options: "i",
+                  },
+                });
+              }}
+              placeholder="Email"
+            />
+          </div>
+          <div className="col-md-3 mb-3 mt-3">
+            <input
+              className="form-control"
+              onChange={(e) => {
+                setinfo({
+                  contacto: {
+                    $regex: ".*" + e.target.value + ".*",
+                    $options: "i",
+                  },
+                });
+              }}
+              placeholder="Telefone"
+            />
           </div>
 
           {membros &&
@@ -208,47 +251,55 @@ export default function GestaoUsuarios() {
               <div className="card-body table-responsive p-0"></div>
               <div className="card-footer clearfix">
                 <ul className="pagination pagination-sm m-0 float-right">
-                  <li className={`page-item  ${page == 1 ? "disabled" : ""}`}>
-                    <a
-                      href="#"
-                      className="page-link"
-                      onClick={() => {
-                        Prev(page);
-                      }}
-                    >
-                      Anterior
-                    </a>
-                  </li>
-
-                  {pages &&
-                    pages.map((n) => (
-                      <li
-                        className={`page-item  ${
-                          page == n.page ? "active" : ""
-                        }`}
-                      >
-                        <a
-                          className="page-link"
-                          onClick={() => {
-                            setpage(n.page);
-                          }}
-                          href="#"
-                        >
-                          {n.page}
-                        </a>
-                      </li>
-                    ))}
-
                   <li
                     className={`page-item  ${
-                      page == nopages ? "disabled" : ""
+                      currentPage === 1 ? "disabled" : ""
                     }`}
                   >
                     <a
                       href="#"
                       className="page-link"
                       onClick={() => {
-                        Next(page);
+                        setCurrentPage((prev) => Math.max(prev - 1, 1));
+                      }}
+                    >
+                      Anterior
+                    </a>
+                  </li>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (n) => (
+                      <li
+                        key={n}
+                        className={`page-item  ${
+                          currentPage === n ? "active" : ""
+                        }`}
+                      >
+                        <a
+                          className="page-link"
+                          onClick={() => {
+                            setCurrentPage(n);
+                          }}
+                          href="#"
+                        >
+                          {n}
+                        </a>
+                      </li>
+                    )
+                  )}
+
+                  <li
+                    className={`page-item  ${
+                      currentPage === totalPages ? "disabled" : ""
+                    }`}
+                  >
+                    <a
+                      href="#"
+                      className="page-link"
+                      onClick={() => {
+                        setCurrentPage((prev) =>
+                          Math.min(prev + 1, totalPages)
+                        );
                       }}
                     >
                       Proximo

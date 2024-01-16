@@ -56,7 +56,6 @@ export default function Register() {
           body: data,
         }
       ).then((r) => r.json());
-      console.log(result);
       user.comprovativo = result.secure_url;
     }
 
@@ -251,10 +250,10 @@ export default function Register() {
                         setform2(true);
                       }}
                     >
-                      Seguir <i class="fa fa-arrow-alt-circle-right"></i>
+                      Próximo <i class="fa fa-arrow-alt-circle-right"></i>
                     </button>
                   </div>
-                  <span class="text-center">Já tem conta?</span>
+                  <span class="text-center mt-4">Já tem conta?</span>
                 </>
               )}
               {form2 && (
