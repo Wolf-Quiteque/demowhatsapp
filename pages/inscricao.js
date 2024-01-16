@@ -47,10 +47,10 @@ export default function Register() {
       const fileName = Date.now() + file.name;
       data.append("file", file);
       data.append("name", fileName);
-      data.append("upload_preset", "ipo-uploads");
+      data.append("upload_preset", "anje");
 
       const result = await fetch(
-        "https://api.cloudinary.com/v1_1/quitopia/image/upload",
+        "https://api.cloudinary.com/v1_1/dup24qnij/image/upload",
         {
           method: "Post",
           body: data,
