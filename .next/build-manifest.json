@@ -25,6 +25,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/inscricao": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/inscricao.js"
+    ],
     "/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

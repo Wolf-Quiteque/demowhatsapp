@@ -9,8 +9,8 @@
  */
 (() => {
 var exports = {};
-exports.id = "pages/api/usuarios/user";
-exports.ids = ["pages/api/usuarios/user"];
+exports.id = "pages/api/usuarios/novomembro";
+exports.ids = ["pages/api/usuarios/novomembro"];
 exports.modules = {
 
 /***/ "mongodb":
@@ -33,13 +33,13 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "(api)/./pages/api/usuarios/user.js":
-/*!************************************!*\
-  !*** ./pages/api/usuarios/user.js ***!
-  \************************************/
+/***/ "(api)/./pages/api/usuarios/novomembro.js":
+/*!******************************************!*\
+  !*** ./pages/api/usuarios/novomembro.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ handler)\n/* harmony export */ });\n/* harmony import */ var _lib_mongodb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../lib/mongodb */ \"(api)/./lib/mongodb.js\");\n\nasync function handler(req, res) {\n  if (req.method !== \"POST\") {\n    return;\n  }\n\n  const data = req.body;\n  const {\n    email\n  } = data;\n  const cliente = await _lib_mongodb__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n  const db = cliente.db(\"anje\");\n  const resul = await db.collection(\"usuarios\").findOne({\n    email: email\n  });\n  res.json(resul);\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvdXN1YXJpb3MvdXNlci5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUFBO0FBRWUsZUFBZUMsT0FBZixDQUF1QkMsR0FBdkIsRUFBNEJDLEdBQTVCLEVBQWlDO0FBQzlDLE1BQUlELEdBQUcsQ0FBQ0UsTUFBSixLQUFlLE1BQW5CLEVBQTJCO0FBQ3pCO0FBQ0Q7O0FBRUQsUUFBTUMsSUFBSSxHQUFHSCxHQUFHLENBQUNJLElBQWpCO0FBQ0EsUUFBTTtBQUFFQyxJQUFBQTtBQUFGLE1BQVlGLElBQWxCO0FBRUEsUUFBTUcsT0FBTyxHQUFHLE1BQU1SLG9EQUF0QjtBQUNBLFFBQU1TLEVBQUUsR0FBR0QsT0FBTyxDQUFDQyxFQUFSLENBQVcsTUFBWCxDQUFYO0FBQ0EsUUFBTUMsS0FBSyxHQUFHLE1BQU1ELEVBQUUsQ0FBQ0UsVUFBSCxDQUFjLFVBQWQsRUFBMEJDLE9BQTFCLENBQWtDO0FBQUVMLElBQUFBLEtBQUssRUFBRUE7QUFBVCxHQUFsQyxDQUFwQjtBQUNBSixFQUFBQSxHQUFHLENBQUNVLElBQUosQ0FBU0gsS0FBVDtBQUNEIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcGFnZXMvYXBpL3VzdWFyaW9zL3VzZXIuanM/YWU2NyJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgY2xpZW50UHJvbWlzZSBmcm9tIFwiLi4vLi4vLi4vbGliL21vbmdvZGJcIjtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IGFzeW5jIGZ1bmN0aW9uIGhhbmRsZXIocmVxLCByZXMpIHtcclxuICBpZiAocmVxLm1ldGhvZCAhPT0gXCJQT1NUXCIpIHtcclxuICAgIHJldHVybjtcclxuICB9XHJcblxyXG4gIGNvbnN0IGRhdGEgPSByZXEuYm9keTtcclxuICBjb25zdCB7IGVtYWlsIH0gPSBkYXRhO1xyXG5cclxuICBjb25zdCBjbGllbnRlID0gYXdhaXQgY2xpZW50UHJvbWlzZTtcclxuICBjb25zdCBkYiA9IGNsaWVudGUuZGIoXCJhbmplXCIpO1xyXG4gIGNvbnN0IHJlc3VsID0gYXdhaXQgZGIuY29sbGVjdGlvbihcInVzdWFyaW9zXCIpLmZpbmRPbmUoeyBlbWFpbDogZW1haWwgfSk7XHJcbiAgcmVzLmpzb24ocmVzdWwpO1xyXG59XHJcbiJdLCJuYW1lcyI6WyJjbGllbnRQcm9taXNlIiwiaGFuZGxlciIsInJlcSIsInJlcyIsIm1ldGhvZCIsImRhdGEiLCJib2R5IiwiZW1haWwiLCJjbGllbnRlIiwiZGIiLCJyZXN1bCIsImNvbGxlY3Rpb24iLCJmaW5kT25lIiwianNvbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(api)/./pages/api/usuarios/user.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _lib_mongodb__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../lib/mongodb */ \"(api)/./lib/mongodb.js\");\n\n\nasync function handler(req, res) {\n  if (req.method !== \"POST\") {\n    return;\n  }\n\n  var data = req.body;\n  const client = await _lib_mongodb__WEBPACK_IMPORTED_MODULE_0__[\"default\"];\n  const db = client.db(\"anje\");\n  const existingUser = await db.collection(\"usuarios\").findOne({\n    email: data.email\n  });\n\n  if (existingUser) {\n    res.status(422).json({\n      message: \"Email já existe\"\n    });\n    return;\n  }\n\n  try {\n    await db.collection(\"usuarios\").insertOne(data);\n    res.status(200).json({\n      message: \"success\"\n    });\n  } catch (error) {\n    console.log(error);\n    res.status(422).json({\n      message: \"Houve um erro!\"\n    });\n  }\n}\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (handler);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwaSkvLi9wYWdlcy9hcGkvdXN1YXJpb3Mvbm92b21lbWJyby5qcy5qcyIsIm1hcHBpbmdzIjoiOzs7OztBQUFBOztBQUVBLGVBQWVDLE9BQWYsQ0FBdUJDLEdBQXZCLEVBQTRCQyxHQUE1QixFQUFpQztBQUMvQixNQUFJRCxHQUFHLENBQUNFLE1BQUosS0FBZSxNQUFuQixFQUEyQjtBQUN6QjtBQUNEOztBQUVELE1BQUlDLElBQUksR0FBR0gsR0FBRyxDQUFDSSxJQUFmO0FBQ0EsUUFBTUMsTUFBTSxHQUFHLE1BQU1QLG9EQUFyQjtBQUVBLFFBQU1RLEVBQUUsR0FBR0QsTUFBTSxDQUFDQyxFQUFQLENBQVUsTUFBVixDQUFYO0FBQ0EsUUFBTUMsWUFBWSxHQUFHLE1BQU1ELEVBQUUsQ0FDMUJFLFVBRHdCLENBQ2IsVUFEYSxFQUV4QkMsT0FGd0IsQ0FFaEI7QUFBRUMsSUFBQUEsS0FBSyxFQUFFUCxJQUFJLENBQUNPO0FBQWQsR0FGZ0IsQ0FBM0I7O0FBSUEsTUFBSUgsWUFBSixFQUFrQjtBQUNoQk4sSUFBQUEsR0FBRyxDQUFDVSxNQUFKLENBQVcsR0FBWCxFQUFnQkMsSUFBaEIsQ0FBcUI7QUFBRUMsTUFBQUEsT0FBTyxFQUFFO0FBQVgsS0FBckI7QUFDQTtBQUNEOztBQUNELE1BQUk7QUFDRixVQUFNUCxFQUFFLENBQUNFLFVBQUgsQ0FBYyxVQUFkLEVBQTBCTSxTQUExQixDQUFvQ1gsSUFBcEMsQ0FBTjtBQUNBRixJQUFBQSxHQUFHLENBQUNVLE1BQUosQ0FBVyxHQUFYLEVBQWdCQyxJQUFoQixDQUFxQjtBQUFFQyxNQUFBQSxPQUFPLEVBQUU7QUFBWCxLQUFyQjtBQUNELEdBSEQsQ0FHRSxPQUFPRSxLQUFQLEVBQWM7QUFDZEMsSUFBQUEsT0FBTyxDQUFDQyxHQUFSLENBQVlGLEtBQVo7QUFDQWQsSUFBQUEsR0FBRyxDQUFDVSxNQUFKLENBQVcsR0FBWCxFQUFnQkMsSUFBaEIsQ0FBcUI7QUFBRUMsTUFBQUEsT0FBTyxFQUFFO0FBQVgsS0FBckI7QUFDRDtBQUNGOztBQUVELGlFQUFlZCxPQUFmIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vLy4vcGFnZXMvYXBpL3VzdWFyaW9zL25vdm9tZW1icm8uanM/MTFlNCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgY2xpZW50UHJvbWlzZSBmcm9tIFwiLi4vLi4vLi4vbGliL21vbmdvZGJcIjtcclxuXHJcbmFzeW5jIGZ1bmN0aW9uIGhhbmRsZXIocmVxLCByZXMpIHtcclxuICBpZiAocmVxLm1ldGhvZCAhPT0gXCJQT1NUXCIpIHtcclxuICAgIHJldHVybjtcclxuICB9XHJcblxyXG4gIHZhciBkYXRhID0gcmVxLmJvZHk7XHJcbiAgY29uc3QgY2xpZW50ID0gYXdhaXQgY2xpZW50UHJvbWlzZTtcclxuXHJcbiAgY29uc3QgZGIgPSBjbGllbnQuZGIoXCJhbmplXCIpO1xyXG4gIGNvbnN0IGV4aXN0aW5nVXNlciA9IGF3YWl0IGRiXHJcbiAgICAuY29sbGVjdGlvbihcInVzdWFyaW9zXCIpXHJcbiAgICAuZmluZE9uZSh7IGVtYWlsOiBkYXRhLmVtYWlsIH0pO1xyXG5cclxuICBpZiAoZXhpc3RpbmdVc2VyKSB7XHJcbiAgICByZXMuc3RhdHVzKDQyMikuanNvbih7IG1lc3NhZ2U6IFwiRW1haWwgasOhIGV4aXN0ZVwiIH0pO1xyXG4gICAgcmV0dXJuO1xyXG4gIH1cclxuICB0cnkge1xyXG4gICAgYXdhaXQgZGIuY29sbGVjdGlvbihcInVzdWFyaW9zXCIpLmluc2VydE9uZShkYXRhKTtcclxuICAgIHJlcy5zdGF0dXMoMjAwKS5qc29uKHsgbWVzc2FnZTogXCJzdWNjZXNzXCIgfSk7XHJcbiAgfSBjYXRjaCAoZXJyb3IpIHtcclxuICAgIGNvbnNvbGUubG9nKGVycm9yKTtcclxuICAgIHJlcy5zdGF0dXMoNDIyKS5qc29uKHsgbWVzc2FnZTogXCJIb3V2ZSB1bSBlcnJvIVwiIH0pO1xyXG4gIH1cclxufVxyXG5cclxuZXhwb3J0IGRlZmF1bHQgaGFuZGxlcjtcclxuIl0sIm5hbWVzIjpbImNsaWVudFByb21pc2UiLCJoYW5kbGVyIiwicmVxIiwicmVzIiwibWV0aG9kIiwiZGF0YSIsImJvZHkiLCJjbGllbnQiLCJkYiIsImV4aXN0aW5nVXNlciIsImNvbGxlY3Rpb24iLCJmaW5kT25lIiwiZW1haWwiLCJzdGF0dXMiLCJqc29uIiwibWVzc2FnZSIsImluc2VydE9uZSIsImVycm9yIiwiY29uc29sZSIsImxvZyJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(api)/./pages/api/usuarios/novomembro.js\n");
 
 /***/ })
 
@@ -50,7 +50,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 var __webpack_require__ = require("../../../webpack-api-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/usuarios/user.js"));
+var __webpack_exports__ = (__webpack_exec__("(api)/./pages/api/usuarios/novomembro.js"));
 module.exports = __webpack_exports__;
 
 })();

@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-anjeportal-dev-115921-authRole",
+      "UnauthRoleArn": "arn:aws:iam::360013723047:role/amplify-anjeportal-dev-115921-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::360013723047:role/amplify-anjeportal-dev-115921-authRole",
+      "Region": "sa-east-1",
+      "DeploymentBucketName": "amplify-anjeportal-dev-115921-deployment",
+      "UnauthRoleName": "amplify-anjeportal-dev-115921-unauthRole",
+      "StackName": "amplify-anjeportal-dev-115921",
+      "StackId": "arn:aws:cloudformation:sa-east-1:360013723047:stack/amplify-anjeportal-dev-115921/56bf6bb0-a182-11ee-a934-062413cc959a",
+      "AmplifyAppId": "d3nuwmd3xvo7lh"
+    },
+    "categories": {
+      "auth": {
+        "anjeportala71a9137": {}
+      },
+      "storage": {
+        "smsauthstorage": {}
+      }
+    }
+  }
+}

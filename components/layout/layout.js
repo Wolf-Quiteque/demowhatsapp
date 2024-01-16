@@ -3,7 +3,11 @@ import { useRouter } from "next/router";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
-import { getDecryptedCookie, setEncryptedCookie,deleteCookie } from "../../lib/session";
+import {
+  getDecryptedCookie,
+  setEncryptedCookie,
+  deleteCookie,
+} from "../../lib/session";
 
 export default function Layout({ children }) {
   const router = useRouter();
@@ -13,20 +17,21 @@ export default function Layout({ children }) {
 
   const getsession = async () => {
     if (status === "unauthenticated") {
-      router.replace("/login");
       const element = document.querySelector("body");
       element.classList.add("hero");
+      if (router.pathname != "/inscricao") {
+        router.replace("/login");
+      }
     } else {
       const element = document.querySelector("body");
       element.classList.remove("hero");
     }
   };
 
-
-  const deleteCookies = async () =>{
-    await deleteCookie("authsesh")
-    signOut()
-  }
+  const deleteCookies = async () => {
+    await deleteCookie("authsesh");
+    signOut();
+  };
 
   const getuser = async () => {
     try {
@@ -226,9 +231,9 @@ export default function Layout({ children }) {
                       className="nav-link"
                       href="#"
                       role="button"
-                      onClick={()=>{
-                        deleteCookies()
-                     }}
+                      onClick={() => {
+                        deleteCookies();
+                      }}
                     >
                       <i className="fas fa-power-off text-danger"></i>
                     </a>

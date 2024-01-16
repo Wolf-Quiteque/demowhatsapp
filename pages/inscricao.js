@@ -11,6 +11,8 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const [tipoconta, settipoconta] = useState("");
   const [file, setfile] = useState(null);
+  const [form1, setform1] = useState(true);
+  const [form2, setform2] = useState(false);
 
   const [nome, setnome] = useState("");
   const [ultimoNome, setultimoNome] = useState("");
@@ -116,7 +118,7 @@ export default function Register() {
       <Head>
         <title>Inscrições - ANJE</title>
       </Head>
-      <div className="register-box" style={{ marginTop: "50px" }}>
+      <div className="register-box" style={{ marginTop: "30px" }}>
         <div className="card card-outline card-primary">
           <div className="card-header text-center">
             <h2>Inscricao</h2>
@@ -124,229 +126,251 @@ export default function Register() {
           <div className="card-body">
             <form onSubmit={onFormSubmit}>
               {/* Nome */}
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="N° BI"
-                  onChange={(e) => {
-                    setbi(e.target.value);
-                  }}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Nome"
-                  onChange={(e) => {
-                    setnome(e.target.value);
-                  }}
-                  required
-                />
-              </div>
-              {/* Último Nome */}
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Último Nome"
-                  onChange={(e) => {
-                    setultimoNome(e.target.value);
-                  }}
-                  required
-                />
-              </div>
-
-              <div className="mb-3">
-                <select
-                  className="form-control"
-                  onChange={(e) => {
-                    user.tipoconta = e.target.value;
-                    settipoconta(e.target.value);
-                  }}
-                  required
-                >
-                  <option value="">Tipo de Conta</option>
-                  <option value="Membro">Membro</option>
-                  <option value="Parceiro">Parcerio</option>
-                </select>
-              </div>
-
-              {tipoconta != "" && (
+              {form1 && (
                 <>
+                  {" "}
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="N° BI"
+                      onChange={(e) => {
+                        setbi(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Nome"
+                      onChange={(e) => {
+                        setnome(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                  {/* Último Nome */}
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Último Nome"
+                      onChange={(e) => {
+                        setultimoNome(e.target.value);
+                      }}
+                      required
+                    />
+                  </div>
                   <div className="mb-3">
                     <select
                       className="form-control"
                       onChange={(e) => {
-                        setclasse(e.target.value);
+                        user.tipoconta = e.target.value;
+                        settipoconta(e.target.value);
                       }}
                       required
                     >
-                      <option value="">Selecione um classe</option>
-                      {tipoconta == "Membro" && (
-                        <>
-                          {" "}
-                          <option value="Platina">
-                            Platina - 35.000,00 kz
-                          </option>
-                          <option value="Diamante">
-                            Diamante - 20.000,00 kz
-                          </option>
-                          <option value="Ouro">Ouro - 10.000,00 kz</option>
-                          <option value="Prata">Prata - 5.000,00 kz</option>
-                        </>
-                      )}
-
-                      {tipoconta == "Parceiro" && (
-                        <>
-                          {" "}
-                          <option value="Platina">
-                            Platina - 100.000,00 kz
-                          </option>
-                          <option value="Diamante">
-                            Diamante - 75.000,00 kz
-                          </option>
-                          <option value="Ouro">Ouro - 50.000,00 kz</option>
-                          <option value="Prata">Prata - 35.000,00 kz</option>
-                        </>
-                      )}
+                      <option value="">Tipo de Conta</option>
+                      <option value="Membro">Membro</option>
+                      <option value="Parceiro">Parcerio</option>
                     </select>
+                  </div>
+                  {tipoconta != "" && (
+                    <>
+                      <div className="mb-3">
+                        <select
+                          className="form-control"
+                          onChange={(e) => {
+                            setclasse(e.target.value);
+                          }}
+                          required
+                        >
+                          <option value="">Selecione um classe</option>
+                          {tipoconta == "Membro" && (
+                            <>
+                              {" "}
+                              <option value="Platina">
+                                Platina - 35.000,00 kz
+                              </option>
+                              <option value="Diamante">
+                                Diamante - 20.000,00 kz
+                              </option>
+                              <option value="Ouro">Ouro - 10.000,00 kz</option>
+                              <option value="Prata">Prata - 5.000,00 kz</option>
+                            </>
+                          )}
+
+                          {tipoconta == "Parceiro" && (
+                            <>
+                              {" "}
+                              <option value="Platina">
+                                Platina - 100.000,00 kz
+                              </option>
+                              <option value="Diamante">
+                                Diamante - 75.000,00 kz
+                              </option>
+                              <option value="Ouro">Ouro - 50.000,00 kz</option>
+                              <option value="Prata">
+                                Prata - 35.000,00 kz
+                              </option>
+                            </>
+                          )}
+                        </select>
+                      </div>
+                    </>
+                  )}
+                  <div className="mb-3">
+                    <div>
+                      <span>Coordenadas báncarias: </span>
+                    </div>
+                    <div>
+                      <span>AO06006600000676366110127</span>
+                    </div>
+                    <div>
+                      <span>ANJE ANGOLA ASS N P C J EMPRESARIOS</span>
+                    </div>
+                    <label for="exampleInputFile">Comprovativo</label>
+                    <input
+                      type="file"
+                      id="exampleInputFile"
+                      accept=".pdf,.jpg,.png,.jpeg"
+                      onChange={(e) => setfile(e.target.files[0])}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <button
+                      className="btn btn-sm btn-info"
+                      onClick={() => {
+                        setform1(false);
+                        setform2(true);
+                      }}
+                    >
+                      Seguir <i class="fa fa-arrow-alt-circle-right"></i>
+                    </button>
                   </div>
                 </>
               )}
-
-              <div className="mb-3">
-                <div>
-                  <span>Coordenadas báncarias: </span>
-                </div>
-                <div>
-                  <span>AO06006600000676366110127</span>
-                </div>
-                <div>
-                  <span>ANJE ANGOLA ASS N P C J EMPRESARIOS</span>
-                </div>
-                <label for="exampleInputFile">Comprovativo</label>
-                <input
-                  type="file"
-                  id="exampleInputFile"
-                  accept=".pdf,.jpg,.png,.jpeg"
-                  onChange={(e) => setfile(e.target.files[0])}
-                />
-              </div>
-
-              {/* Email */}
-              <div className="mb-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  placeholder="Email"
-                  onChange={(e) => {
-                    user.email = e.target.value.toLowerCase();
-                  }}
-                  required
-                />
-              </div>
-
-              {/* Contacto */}
-              <div className="mb-3">
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">+244</span>
+              {form2 && (
+                <>
+                  <div className="mb-3">
+                    <button
+                      className="btn btn-sm btn-info"
+                      onClick={() => {
+                        setform1(true);
+                        setform2(false);
+                      }}
+                    >
+                      <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+                    </button>
                   </div>
-                  <input
-                    type="number"
-                    className="form-control"
-                    data-inputmask='"mask": "(999) 999-9999"'
-                    data-mask=""
-                    inputmode="number"
-                    placeholder="Contacto"
-                    onChange={(e) => {
-                      user.contacto = e.target.value;
-                    }}
-                    required
-                  />
-                </div>
-              </div>
+                  <div className="mb-3">
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="Email"
+                      onChange={(e) => {
+                        user.email = e.target.value.toLowerCase();
+                      }}
+                      required
+                    />
+                  </div>
+                  {/* Contacto */}
+                  <div className="mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text">+244</span>
+                      </div>
+                      <input
+                        type="number"
+                        className="form-control"
+                        data-inputmask='"mask": "(999) 999-9999"'
+                        data-mask=""
+                        inputmode="number"
+                        placeholder="Contacto"
+                        onChange={(e) => {
+                          user.contacto = e.target.value;
+                        }}
+                        required
+                      />
+                    </div>
+                  </div>
+                  {/* Motivação */}
+                  <div className="mb-3">
+                    <textarea
+                      className="form-control"
+                      placeholder="Motivação"
+                      onChange={(e) => {
+                        user.motivacao = e.target.value;
+                      }}
+                      required
+                    />
+                  </div>
+                  {/* Data de Nascimento */}
+                  <div className="mb-3">
+                    <label for="exampleInputFile">Data de Nascimento</label>
 
-              {/* Motivação */}
-              <div className="mb-3">
-                <textarea
-                  className="form-control"
-                  placeholder="Motivação"
-                  onChange={(e) => {
-                    user.motivacao = e.target.value;
-                  }}
-                  required
-                />
-              </div>
-
-              {/* Data de Nascimento */}
-              <div className="mb-3">
-                <label for="exampleInputFile">Data de Nascimento</label>
-
-                <input
-                  type="date"
-                  className="form-control"
-                  placeholder="Data de Nascimento"
-                  onChange={(e) => {
-                    user.dataNascimento = e.target.value;
-                  }}
-                  required
-                />
-              </div>
-
-              {/* Província */}
-              <div className="mb-3">
-                <select
-                  id="provincia"
-                  className="form-control"
-                  onChange={(e) => {
-                    user.provincia = e.target.value;
-                  }}
-                  required
-                >
-                  <option value="">Selecione a Província</option>
-                  {provincesList.map((province) => (
-                    <option key={province} value={province}>
-                      {province}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Município */}
-              <div className="mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Município"
-                  onChange={(e) => {
-                    user.municipio = e.target.value;
-                  }}
-                  required
-                />
-              </div>
-
-              <div className="row">
-                <div className="col-12">
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block"
-                    disabled={loading}
-                  >
-                    {loading ? "Aguarde..." : "Registar"}
-                  </button>
-                  {!loading && (
-                    <Link href="/login">
-                      <a className="btn btn-xs btn-warning btn-block">
-                        Iniciar Sessão
-                      </a>
-                    </Link>
-                  )}
-                </div>
-              </div>
+                    <input
+                      type="date"
+                      className="form-control"
+                      placeholder="Data de Nascimento"
+                      onChange={(e) => {
+                        user.dataNascimento = e.target.value;
+                      }}
+                      required
+                    />
+                  </div>
+                  {/* Província */}
+                  <div className="mb-3">
+                    <select
+                      id="provincia"
+                      className="form-control"
+                      onChange={(e) => {
+                        user.provincia = e.target.value;
+                      }}
+                      required
+                    >
+                      <option value="">Selecione a Província</option>
+                      {provincesList.map((province) => (
+                        <option key={province} value={province}>
+                          {province}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {/* Município */}
+                  <div className="mb-3">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Município"
+                      onChange={(e) => {
+                        user.municipio = e.target.value;
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="row">
+                    <div className="col-12">
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-block"
+                        disabled={loading}
+                      >
+                        {loading ? "Aguarde..." : "Registar"}
+                      </button>
+                      {!loading && (
+                        <Link href="/login">
+                          <a className="btn btn-xs btn-warning btn-block">
+                            Iniciar Sessão
+                          </a>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                </>
+              )}
             </form>
           </div>
         </div>
