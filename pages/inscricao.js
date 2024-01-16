@@ -47,7 +47,7 @@ export default function Register() {
       const fileName = Date.now() + file.name;
       data.append("file", file);
       data.append("name", fileName);
-      data.append("upload_preset", "anje");
+      data.append("upload_preset", "rvtitoz5");
 
       const result = await fetch(
         "https://api.cloudinary.com/v1_1/dup24qnij/image/upload",
@@ -56,6 +56,7 @@ export default function Register() {
           body: data,
         }
       ).then((r) => r.json());
+      console.log(result);
       user.comprovativo = result.secure_url;
     }
 
@@ -121,7 +122,7 @@ export default function Register() {
       <div className="register-box" style={{ marginTop: "30px" }}>
         <div className="card card-outline card-primary">
           <div className="card-header text-center">
-            <h2>Inscricao</h2>
+            <h2>Inscrição</h2>
           </div>
           <div className="card-body">
             <form onSubmit={onFormSubmit}>
@@ -192,13 +193,16 @@ export default function Register() {
                             <>
                               {" "}
                               <option value="Platina">
-                                Platina - 35.000,00 kz
+                                Diamante - 35.000,00 kz
                               </option>
                               <option value="Diamante">
-                                Diamante - 20.000,00 kz
+                                Platina - 20.000,00 kz
                               </option>
                               <option value="Ouro">Ouro - 10.000,00 kz</option>
                               <option value="Prata">Prata - 5.000,00 kz</option>
+                              <option value="Bronze">
+                                Bronze - 1.000,00 kz
+                              </option>
                             </>
                           )}
 
@@ -206,10 +210,10 @@ export default function Register() {
                             <>
                               {" "}
                               <option value="Platina">
-                                Platina - 100.000,00 kz
+                                Diamante - 100.000,00 kz
                               </option>
                               <option value="Diamante">
-                                Diamante - 75.000,00 kz
+                                Platina - 75.000,00 kz
                               </option>
                               <option value="Ouro">Ouro - 50.000,00 kz</option>
                               <option value="Prata">
@@ -250,6 +254,7 @@ export default function Register() {
                       Seguir <i class="fa fa-arrow-alt-circle-right"></i>
                     </button>
                   </div>
+                  <span class="text-center">Já tem conta?</span>
                 </>
               )}
               {form2 && (
@@ -262,7 +267,8 @@ export default function Register() {
                         setform2(false);
                       }}
                     >
-                      <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+                      <i class="fa fa-arrow-alt-circle-left"></i>
+                      Voltar
                     </button>
                   </div>
                   <div className="mb-3">
@@ -360,16 +366,16 @@ export default function Register() {
                       >
                         {loading ? "Aguarde..." : "Registar"}
                       </button>
-                      {!loading && (
-                        <Link href="/login">
-                          <a className="btn btn-xs btn-warning btn-block">
-                            Iniciar Sessão
-                          </a>
-                        </Link>
-                      )}
                     </div>
                   </div>
                 </>
+              )}
+              {!loading && (
+                <Link href="/login">
+                  <a className="btn btn-xs btn-warning btn-block">
+                    Iniciar Sessão
+                  </a>
+                </Link>
               )}
             </form>
           </div>
