@@ -99,7 +99,7 @@ export default function GestaoUsuarios() {
       const data = await res.json();
       Getusuarios();
       toast.update(toaststate, {
-        render: data.message,
+        render: "enviado com sucesso",
         type: "success",
         isLoading: false,
         closeOnClick: true,
@@ -108,7 +108,7 @@ export default function GestaoUsuarios() {
     } catch (err) {
       const data = await res.json();
       toast.update(toaststate, {
-        render: data.message,
+        render: "houve um erro",
         type: "error",
         isLoading: false,
         closeOnClick: true,

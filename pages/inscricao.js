@@ -42,6 +42,11 @@ export default function Register() {
   const onFormSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+    if (!file) {
+      alert("Comprovativo Obrigatório!");
+      setLoading(false);
+      return false;
+    }
     if (file) {
       const data = new FormData();
       const fileName = Date.now() + file.name;
@@ -244,7 +249,7 @@ export default function Register() {
                   </div>
                   <div className="mb-3">
                     <button
-                      className="btn btn-sm btn-info"
+                      className="btn btn-sm btn-info btn-block"
                       onClick={() => {
                         setform1(false);
                         setform2(true);

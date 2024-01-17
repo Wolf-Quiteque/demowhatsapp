@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useRef, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
+import InactiveAccountModal from "../modalComponent";
 import {
   getDecryptedCookie,
   setEncryptedCookie,
@@ -34,23 +35,29 @@ export default function Layout({ children }) {
   };
 
   const getuser = async () => {
-    try {
-      const res = await fetch("/api/usuarios/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: session.user.email,
-        }),
-      });
+    const response = await getDecryptedCookie("authsesh");
 
-      const response = await res.json();
-      setEncryptedCookie("authsesh", response);
+    if (!response) {
+      try {
+        const res = await fetch("/api/usuarios/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: session.user.email,
+          }),
+        });
 
+        const response = await res.json();
+
+        setusuario(response);
+        setEncryptedCookie("authsesh", response);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
       setusuario(response);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -60,15 +67,29 @@ export default function Layout({ children }) {
   // };
 
   useEffect(() => {
+    $("#inactiveAccountModal").modal("show");
+
+    $("#inactiveAccountModal").modal({
+      backdrop: "static",
+      keyboard: false,
+    });
+  }, []);
+
+  useEffect(() => {
     getsession();
-    if (status == "authenticated" && usuario == null) {
+    if (usuario == null) {
       getuser();
     }
+
     setnewstatus(status);
   }, [status, session]);
 
   return (
     <div className="wrapper">
+      {usuario && !usuario.estado && router.pathname != "/perfil" && (
+        <InactiveAccountModal />
+      )}
+
       {newstatus == "authenticated" ? (
         router.pathname != "/empresa/[empresa_id]" ? (
           <>
@@ -240,7 +261,14 @@ export default function Layout({ children }) {
                   </li>
 
                   <li className="nav-item">
-                    <a className="nav-link" href="#" role="button">
+                    <a
+                      className="nav-link"
+                      onClick={() => {
+                        router.replace("/perfil");
+                      }}
+                      href="#"
+                      role="button"
+                    >
                       <i className="fas fa-user"></i>
                     </a>
                   </li>
@@ -270,7 +298,10 @@ export default function Layout({ children }) {
                     </div>
                     <div className="info">
                       <a href="#" className="d-block">
-                        {usuario && usuario.nome}
+                        {usuario &&
+                          usuario.nome.slice(0, 8) +
+                            " " +
+                            usuario.ultimonome.slice(0, 10)}
                       </a>
                     </div>
                   </div>
@@ -302,9 +333,9 @@ export default function Layout({ children }) {
                         <>
                           <li className="nav-header">Gestão Administrativo</li>
 
-                          <li className="nav-item">
+                          <li className="nav-item disabled">
                             <Link href="/gestao-usuarios">
-                              <a className="nav-link">
+                              <a className="nav-link disabled">
                                 <i className="nav-icon fas fa-users"></i>
                                 <p>Administradores</p>
                               </a>
@@ -352,15 +383,26 @@ export default function Layout({ children }) {
                           </li>
                         </>
                       )}
-                      <li className="nav-header">Ferramentas e Recursos</li>
-                      <li className="nav-item">
-                        <Link href="/recursos">
-                          <a className="nav-link">
-                            <i className="nav-icon fas fa-book"></i>
-                            <p>Recursos</p>
-                          </a>
-                        </Link>
-                      </li>
+                      <>
+                        <li className="nav-header">Ferramentas e Recursos</li>
+                        <li className="nav-item">
+                          <Link href="/recursos">
+                            <a className="nav-link">
+                              <i className="nav-icon fas fa-book"></i>
+                              <p>Recursos</p>
+                            </a>
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link href="/recursos">
+                            <a className="nav-link">
+                              <i className="nav-icon fas fa-calendar-alt"></i>
+                              <p>Eventos</p>
+                            </a>
+                          </Link>
+                        </li>
+                      </>
+
                       {/* <li className="nav-item">
                         <Link href="/brevemente">
                           <a className="nav-link">
@@ -406,7 +448,7 @@ export default function Layout({ children }) {
           </div>
         )
       ) : (
-        <div className="containerNew">{children}</div>
+        <div className="containerNew">{children} </div>
       )}
       <aside className="control-sidebar control-sidebar-dark"></aside>
     </div>
