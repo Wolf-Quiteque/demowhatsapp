@@ -51,7 +51,7 @@ const Profile = ({ user }) => {
         body: JSON.stringify({
           email: usuario.email,
           tipo: tipoconta,
-          classe: skills,
+          classe: classe,
           comprovativo: result.secure_url,
         }),
       });
