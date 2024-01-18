@@ -249,14 +249,14 @@ const Profile = ({ user }) => {
                   <div className="text-center text-success">
                     {" "}
                     <small>
-                      <i className="fa fa-circle"></i>conta activo
+                      <i className="fa fa-circle"></i> activo
                     </small>{" "}
                   </div>
                 ) : (
                   <div className="text-center text-danger">
                     {" "}
                     <small>
-                      <i className="fa fa-circle"></i>conta Inactivo
+                      <i className="fa fa-circle"></i> Inactivo
                     </small>{" "}
                   </div>
                 )}
@@ -392,7 +392,7 @@ const Profile = ({ user }) => {
                         <h5 className="text-successs">
                           {usuario && usuario.estado
                             ? "Acesso aberto para membros Activos"
-                            : "Conta inactiva - Entre em pagamentos & Tenha acesso"}
+                            : "Conta inactiva - Entre em pagamentos e tenha acesso."}
                         </h5>
                       </div>
                       <div className="col-md-4 text-center">
