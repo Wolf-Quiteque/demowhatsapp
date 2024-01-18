@@ -13,7 +13,7 @@ export default function Login() {
   const { data: session, status } = useSession();
   const getsession = async () => {
     if (status === "authenticated") {
-      router.replace("/");
+      router.replace("/perfil");
     }
   };
 
