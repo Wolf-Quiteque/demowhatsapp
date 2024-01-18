@@ -244,7 +244,7 @@ const Profile = ({ user }) => {
                     alt="User profile picture"
                   />
                 </div>
-
+                conta{" "}
                 {usuario && usuario.estado ? (
                   <div className="text-center text-success">
                     {" "}
@@ -260,7 +260,6 @@ const Profile = ({ user }) => {
                     </small>{" "}
                   </div>
                 )}
-
                 <h3 className="x profile-username text-center">
                   {usuario &&
                     usuario.nome.slice(0, 8) +
