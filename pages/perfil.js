@@ -244,19 +244,19 @@ const Profile = ({ user }) => {
                     alt="User profile picture"
                   />
                 </div>
-                conta{" "}
+
                 {usuario && usuario.estado ? (
                   <div className="text-center text-success">
                     {" "}
                     <small>
-                      <i className="fa fa-circle"></i> activo
+                      <i className="fa fa-circle"></i>conta activo
                     </small>{" "}
                   </div>
                 ) : (
                   <div className="text-center text-danger">
                     {" "}
                     <small>
-                      <i className="fa fa-circle"></i> Inactivo
+                      <i className="fa fa-circle"></i>conta Inactivo
                     </small>{" "}
                   </div>
                 )}
