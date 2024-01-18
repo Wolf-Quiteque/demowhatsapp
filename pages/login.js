@@ -41,7 +41,7 @@ export default function Login() {
     });
 
     if (!result.error) {
-      router.replace("/");
+      router.replace("/perfil");
     } else {
       setloading(false);
       console.log(result.error);
