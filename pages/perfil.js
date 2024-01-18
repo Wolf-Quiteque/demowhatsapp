@@ -390,7 +390,9 @@ const Profile = ({ user }) => {
                     <div className="row">
                       <div className="col-md-12 text-center">
                         <h5 className="text-successs">
-                          Acesso aberto para membros Activos
+                          {usuario && usuario.estado
+                            ? "Acesso aberto para membros Activos"
+                            : "Conta inactiva - Entre em pagamentos & Tenha acesso"}
                         </h5>
                       </div>
                       <div className="col-md-4 text-center">
