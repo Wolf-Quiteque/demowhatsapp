@@ -462,7 +462,7 @@ const Profile = ({ user }) => {
                           <div className="mb-3">
                             <select
                               className="form-control"
-                              value={usuario && usuario.tipo}
+                            
                               onChange={(e) => {
                                 settipoconta(e.target.value);
                               }}
@@ -478,7 +478,7 @@ const Profile = ({ user }) => {
                               <div className="mb-3">
                                 <select
                                   className="form-control"
-                                  value={usuario && usuario.classe}
+                                
                                   onChange={(e) => {
                                     setclasse(e.target.value);
                                   }}
