@@ -460,9 +460,18 @@ const Profile = ({ user }) => {
                         </div>
                         <div className="col-md-6">
                           <div className="mb-3">
+                            <div className="mb-1">
+                              <h5>
+                                {" "}
+                                Coordenadas báncarias:
+                                <br />
+                                AO06006600000676366110127
+                                <br />
+                                ANJE ANGOLA ASS N P C J EMPRESARIOS
+                              </h5>
+                            </div>
                             <select
                               className="form-control"
-                            
                               onChange={(e) => {
                                 settipoconta(e.target.value);
                               }}
@@ -478,7 +487,6 @@ const Profile = ({ user }) => {
                               <div className="mb-3">
                                 <select
                                   className="form-control"
-                                
                                   onChange={(e) => {
                                     setclasse(e.target.value);
                                   }}
