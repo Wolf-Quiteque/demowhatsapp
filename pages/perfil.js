@@ -458,8 +458,13 @@ const Profile = ({ user }) => {
                             </div>
                           )}
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-3">
                           <div className="mb-3">
+                          <div class="mb-1">
+                       <h4> Coordenadas báncarias:<br/>
+AO06006600000676366110127<br/>
+ANJE ANGOLA ASS N P C J EMPRESARIOS</h4>
+                        </div>
                             <select
                               className="form-control"
                             
@@ -542,6 +547,7 @@ const Profile = ({ user }) => {
                             </>
                           )}
                         </div>
+                    
                       </div>
                     </div>
                   </div>
