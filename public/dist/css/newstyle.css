@@ -1,7 +1,7 @@
 .hero {
   width: 100%;
   height: 60vh;
-  background: url("../../img/hero-bgg.jpeg") center center;
+  background: url("../../img/hero-bgg1.jpg") center center;
   background-size: cover;
   position: relative;
   z-index: 1;
