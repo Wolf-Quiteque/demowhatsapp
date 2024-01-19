@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSession } from "next-auth/react";
 
 import { getDecryptedCookie, setEncryptedCookie } from "../lib/session";
 import axios from "axios";
@@ -8,6 +9,7 @@ import { verifyPassword, hashPassword } from "../lib/auth";
 
 const Profile = ({ user }) => {
   var toaststate;
+  const { data: session, status } = useSession();
 
   const [usuario, setusuario] = useState(getDecryptedCookie("authsesh"));
 
@@ -188,7 +190,7 @@ const Profile = ({ user }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: usuario.email,
+          email: session.user.email,
         }),
       });
 
