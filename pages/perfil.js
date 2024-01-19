@@ -21,6 +21,7 @@ const Profile = ({ user }) => {
 
   const [senhaNova, setsenhaNova] = useState("");
   const [senhaConfirmar, setsenhaConfirmar] = useState("");
+  const [loading, setloading] = useState(false);
 
   const [education, setEducation] = useState(usuario ? usuario.educacao : "");
   const [classe, setclasse] = useState(usuario ? usuario.classe : "");
@@ -30,6 +31,9 @@ const Profile = ({ user }) => {
   const [notes, setNotes] = useState(usuario ? usuario.motivacao : "");
 
   const addcomprovativo = async () => {
+    toaststate = toast.loading("aguarde...", { closeOnClick: true });
+    setloading(true);
+
     const data = new FormData();
     const fileName = Date.now() + file.name;
     data.append("file", file);
@@ -62,6 +66,15 @@ const Profile = ({ user }) => {
     } catch (error) {
       console.log(error);
     }
+
+    toast.update(toaststate, {
+      render: "enviado com sucesso",
+      type: "success",
+      isLoading: false,
+      closeOnClick: true,
+      autoClose: 1300,
+    });
+    setloading(false);
   };
 
   const onFormSubmit = async (e) => {
@@ -113,7 +126,7 @@ const Profile = ({ user }) => {
   const Mudarsenha = async () => {
     toaststate = toast.loading("aguarde...", { closeOnClick: true });
 
-    const newpassword = await hashPassword(senhaConfirmar);
+    const newpassword = await hashPassword(o);
     try {
       await fetch("/api/usuarios/update", {
         method: "POST",
@@ -536,14 +549,22 @@ const Profile = ({ user }) => {
                                 </select>
                               </div>
                               {classe && tipoconta && file ? (
-                                <button
-                                  className="btn btn-info"
-                                  onClick={() => {
-                                    addcomprovativo();
-                                  }}
-                                >
-                                  Enviar
-                                </button>
+                                <>
+                                  {loading ? (
+                                    <button className="btn btn-info disabled">
+                                      Enviar
+                                    </button>
+                                  ) : (
+                                    <button
+                                      className="btn btn-info"
+                                      onClick={() => {
+                                        addcomprovativo();
+                                      }}
+                                    >
+                                      Enviar
+                                    </button>
+                                  )}
+                                </>
                               ) : (
                                 <button className="btn btn-info disabled">
                                   Enviar
