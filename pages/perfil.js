@@ -407,7 +407,7 @@ const Profile = ({ user }) => {
                         <h5 className="text-successs">
                           {usuario && usuario.estado
                             ? "Acesso aberto para membros Activos"
-                            : "Conta inactiva - Entre em pagamentos e tenha acesso."}
+                            : "Conta inactiva  - Entra em pagamento para activar a sua conta ANJE e ter acesso ao evento."}
                         </h5>
                       </div>
                       <div className="col-md-4 text-center">
