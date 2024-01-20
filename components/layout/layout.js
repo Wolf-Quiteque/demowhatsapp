@@ -17,13 +17,15 @@ export default function Layout({ children }) {
   const [newstatus, setnewstatus] = useState("");
 
   const getsession = async () => {
-    if (status === "unauthenticated") {
+    if (status === "unauthenticated" && router.pathname != "/inscritos") {
       const element = document.querySelector("body");
       element.classList.add("hero");
       if (router.pathname != "/inscricao") {
         router.replace("/login");
       }
-    } else {
+    }
+
+    if (status == "unauthenticated" || router.pathname == "/inscritos") {
       const element = document.querySelector("body");
       element.classList.remove("hero");
     }

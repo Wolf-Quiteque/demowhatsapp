@@ -494,7 +494,7 @@ const Profile = ({ user }) => {
                             >
                               <option value="">Tipo de Conta</option>
                               <option value="Membro">Membro</option>
-                              <option value="Parceiro">Parcerio</option>
+                              <option value="Parceiro">Parceiro</option>
                             </select>
                           </div>
                           {tipoconta != "" && (
