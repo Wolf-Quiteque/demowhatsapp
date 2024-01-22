@@ -12,6 +12,7 @@ import Card from "../lib/Card";
 export default function GestaoUsuarios() {
   const [usuarios, setusuarios] = useState();
   const [usuario, setusuario] = useState();
+  const [filter, setfilter] = useState(false);
 
   const [page, setpage] = useState(1);
   const [pages, setpages] = useState();
@@ -178,62 +179,111 @@ export default function GestaoUsuarios() {
         <div className="row">
           <div className="col-md-12">
             {/* <h3 className="mt-3 mb-3">Inscrições de novo membros</h3> */}
+            <div className="row mb-3">
+              <div className="col-md-6 mt-4">
+                <button
+                  onClick={(e) => {
+                    setinfo({
+                      comprovativo: {
+                        $regex: ".*" + "https://res.cloudinary.com" + ".*",
+                        $options: "i",
+                      },
+                    });
+                  }}
+                  className="btn btn-sm btn-warning mr-1"
+                >
+                  <i className="fa fa-coins"></i> pendentes
+                </button>
+                <button
+                  onClick={() => {
+                    setfilter(!filter);
+                  }}
+                  className="btn btn-sm btn-primary"
+                >
+                  <i className="fa fa-filter"></i> filtros
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="col-md-3 mb-3 mt-3">
-            <h4>
-              <i className="fa fa-search"> </i> Pesquisar
-            </h4>
-          </div>
-          <div className="col-md-3 mb-3 mt-3">
-            <input
-              className="form-control"
-              placeholder="Nome"
-              onChange={(e) => {
-                setinfo({
-                  nome: {
-                    $regex: ".*" + e.target.value + ".*",
-                    $options: "i",
-                  },
-                });
-              }}
-            />
-          </div>
-          <div className="col-md-3 mb-3 mt-3">
-            <input
-              className="form-control"
-              onChange={(e) => {
-                setinfo({
-                  email: {
-                    $regex: ".*" + e.target.value + ".*",
-                    $options: "i",
-                  },
-                });
-              }}
-              placeholder="Email"
-            />
-          </div>
-          <div className="col-md-3 mb-3 mt-3">
-            <input
-              className="form-control"
-              onChange={(e) => {
-                setinfo({
-                  contacto: {
-                    $regex: ".*" + e.target.value + ".*",
-                    $options: "i",
-                  },
-                });
-              }}
-              placeholder="Telefone"
-            />
-          </div>
+          {filter && (
+            <>
+              {" "}
+              <div className="col-md-3 mb-3 mt-3">
+                <input
+                  className="form-control"
+                  placeholder="Classe"
+                  onChange={(e) => {
+                    setinfo({
+                      classe: {
+                        $regex: ".*" + e.target.value + ".*",
+                        $options: "i",
+                      },
+                    });
+                  }}
+                />
+              </div>
+              <div className="col-md-3 mb-3 mt-3">
+                <input
+                  className="form-control"
+                  placeholder="Nome"
+                  onChange={(e) => {
+                    setinfo({
+                      nome: {
+                        $regex: ".*" + e.target.value + ".*",
+                        $options: "i",
+                      },
+                    });
+                  }}
+                />
+              </div>
+              <div className="col-md-3 mb-3 mt-3">
+                <input
+                  className="form-control"
+                  onChange={(e) => {
+                    setinfo({
+                      contacto: {
+                        $regex: ".*" + e.target.value + ".*",
+                        $options: "i",
+                      },
+                    });
+                  }}
+                  placeholder="Telefone"
+                />
+              </div>
+              <div className="col-md-3 mb-3 mt-3">
+                <select
+                  className="form-control"
+                  onChange={(e) => {
+                    setinfo({
+                      classe: {
+                        $regex: ".*" + e.target.value + ".*",
+                        $options: "i",
+                      },
+                    });
+                  }}
+                  placeholder="Email"
+                >
+                  <option value="">Classe</option>
+
+                  <option value="Platina">Diamante - 35.000,00 kz</option>
+                  <option value="Diamante">Platina - 20.000,00 kz</option>
+                  <option value="Ouro">Ouro - 10.000,00 kz</option>
+                  <option value="Prata">Prata - 5.000,00 kz</option>
+                  <option value="Bronze">Bronze - 1.000,00 kz</option>
+                </select>
+              </div>
+            </>
+          )}
 
           {membros &&
             membros.map((membro) => (
               <div className="col-md-4">
                 <Card
                   //   key={i}
-                  class="callout-danger"
+                  class={
+                    membro.comprovativo ? "callout-info" : "callout-danger"
+                  }
                   membro={membro}
                   onClick={(cliente) => {
                     setclienteinfo(cliente);

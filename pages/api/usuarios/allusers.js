@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const data = req.body;
   const { page, info } = data;
   console.log(data);
-  const perPage = 6;
+  const perPage = 9;
   const currentPage = page || 1;
 
   const db = cliente.db("anje");
