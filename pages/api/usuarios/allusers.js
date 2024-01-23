@@ -9,7 +9,6 @@ export default async function handler(req, res) {
 
   const data = req.body;
   const { page, info } = data;
-  console.log(data);
   const perPage = 9;
   const currentPage = page || 1;
 
@@ -42,7 +41,7 @@ export default async function handler(req, res) {
     // Calculate the total number of pages
     const totalPages = Math.ceil(total / perPage);
 
-    res.json({ pages: totalPages, usuarios: results });
+    res.json({ pages: totalPages, usuarios: results, inscritos: total });
   } catch (error) {
     console.error("Error in pagination:", error);
     res.status(500).json({ error: "Internal Server Error" });

@@ -16,6 +16,8 @@ export default function GestaoUsuarios() {
 
   const [page, setpage] = useState(1);
   const [pages, setpages] = useState();
+  const [numberincritos, setnumberincritos] = useState();
+
   const [nopages, setnopages] = useState();
   const [loading, setloading] = useState(false);
   const [membros, setmembros] = useState([]);
@@ -41,6 +43,7 @@ export default function GestaoUsuarios() {
       }),
     });
     const data = await res.json();
+    setnumberincritos(data.inscritos);
     setmembros(data.usuarios);
     setTotalPages(data.pages);
   };
@@ -201,6 +204,10 @@ export default function GestaoUsuarios() {
                 >
                   <i className="fa fa-filter"></i> filtros
                 </button>
+                <span className="mr-3">
+                  {" "}
+                  <strong>Nº:{" " + numberincritos}</strong>{" "}
+                </span>
               </div>
             </div>
           </div>
