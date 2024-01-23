@@ -29,7 +29,6 @@ export default function GestaoUsuarios() {
 
   const Getusuarios = async () => {
     var filter = Info;
-    filter.conta = "pendente";
 
     const res = await fetch("/api/usuarios/allusers", {
       method: "POST",
