@@ -15,12 +15,17 @@ async function handler(req, res) {
   const db = client.db("anje");
   const now = new Date();
 
+
+
   const userpassword = makeid();
   const hashedPassword = await hashPassword(userpassword);
 
   data.password = hashedPassword;
   data.createdAt = new Date(now.getTime() + 1);
   data.conta = "activo";
+  data.tipo = "membro";
+  data.ultimonome="...";
+  data.email = req.body.email.toLowerCase()
 
   const response = await db
     .collection("usuarios")
