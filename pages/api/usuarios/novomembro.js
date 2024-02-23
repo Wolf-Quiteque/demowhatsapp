@@ -1,4 +1,5 @@
 import clientPromise from "../../../lib/mongodb";
+import { hashPassword } from "../../../lib/auth";
 
 async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,6 +9,9 @@ async function handler(req, res) {
   var data = req.body;
   const client = await clientPromise;
 
+ 
+  const newpassword = await hashPassword(data.password);
+  data.password = newpassword
   const db = client.db("anje");
   const existingUser = await db
     .collection("usuarios")

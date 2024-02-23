@@ -65,7 +65,7 @@ export default function Register() {
     }
 
     user.tipo = "membro";
-    user.conta = "pendente";
+    user.conta = "activo";
     user.nome = nome;
     user.bi = bi;
     user.ultimonome = ultimoNome;
@@ -282,6 +282,17 @@ export default function Register() {
                       placeholder="Email"
                       onChange={(e) => {
                         user.email = e.target.value.toLowerCase();
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Cria uma senha"
+                      onChange={(e) => {
+                        user.password = e.target.value;
                       }}
                       required
                     />
