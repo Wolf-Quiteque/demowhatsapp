@@ -104,7 +104,6 @@ export default function Register() {
 
     // Simulate form submission
     setTimeout(() => {
-      setLoading(false);
       toast.success(
         "Obrigado, caso fou aprovado As credenciais serão enviadas para o seu e-mail. Obrigado.(verifique no spam tambem)",
         {
