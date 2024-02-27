@@ -50,8 +50,15 @@ export default function GestaoUsuarios() {
     setmembros(data.usuarios);
     setTotalPages(data.pages);
   };
+  function generateRandom4DigitNumber() {
+    // Generate a random number between 1000 and 9999 (inclusive)
+    const randomNumber = Math.floor(Math.random() * 90000) + 10000;
+    return randomNumber;
+  }
 
   const sendmessage = async () => {
+    toaststate = toast.loading("aguarde...", { closeOnClick: true });
+
     var filter = Info;
 
     const res = await fetch("/api/usuarios/usersmessage", {
@@ -65,8 +72,37 @@ export default function GestaoUsuarios() {
     });
     const data = await res.json();
     const selectedusers = data.users;
+    var contactos = [];
+    for (let index = 0; index < selectedusers.length; index++) {
+      contactos.push(selectedusers[index].contacto);
+    }
 
-    console.log(selectedusers);
+    const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken:
+          "4xPR7x9Sn1njzYIMka7GD0vJKG6vP5Cm6liHjRTqR3CoDiPzYpr2kRg0Jj3twj7SfklkgZikH08oUL3WjoXjlCkNYsFoBwLAduO76g6Z5iU9loPebTNXVdkz7UQTEoT11efTnnoNpwVIzips7etUjzMganD9Vte35KjopgeqChAWxundN74y8rHAAXiet6Eu5DM04qGVuCzMpwNra0kvRKT27eoS6B4xRFkM5Ai8mlaP81Wfj7dy5X1HTsY6qFR",
+      },
+      body: JSON.stringify({
+        auth_id: "122792814220057352",
+        secret_key:
+          "VB9ErlsiFQGfEOpME4HEb6bDXl2LcbKHLAGQbEVjHTAO4P1whIvjqCwg5BT1Fh0N0cSLCE48Hh8YWe2pVWrkcXZUkN0QrMnkJC9o",
+        contactNo: contactos,
+        from: "ANJE-ANGOLA",
+        message: message,
+      }),
+    });
+
+    const resp = await resmessage.json();
+    console.log(resp);
+    toast.update(toaststate, {
+      render: "enviado com sucesso",
+      type: "success",
+      isLoading: false,
+      closeOnClick: true,
+      autoClose: 1300,
+    });
   };
 
   const getsesh = async () => {
@@ -180,6 +216,9 @@ export default function GestaoUsuarios() {
   const Aprovarusario = async (membro) => {
     toaststate = toast.loading("aguarde...", { closeOnClick: true });
     setloading(true);
+    const random4DigitNumber = generateRandom4DigitNumber();
+
+    const SmSmessage = `${membro.nome}  Seja bem-vindo(a) a ANJE-Angola, é uma honra tê-lo(a) como membro ANJE!\n\nA sua conta ANJE está activa, através do seu número de telefone registado e este código: ${random4DigitNumber}, tens acesso a “1ª Conferência Anual de Jovens Mulheres Empresarias de Angola.” Dia 16 de Março no Centro de Conferência de Belas (CCB).\n\nAcesse o portal em: https://portal-eta-eight.vercel.app/login\n\nANJE Angola - “Uma Angola feita por todos, e melhor para todos“`;
 
     try {
       const res = await fetch("/api/usuarios/aprovarcomrovativo", {
@@ -190,7 +229,30 @@ export default function GestaoUsuarios() {
         body: JSON.stringify(membro),
       });
       Getusuarios();
+
+      const contactsend = [membro.contacto];
+      const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken:
+            "4xPR7x9Sn1njzYIMka7GD0vJKG6vP5Cm6liHjRTqR3CoDiPzYpr2kRg0Jj3twj7SfklkgZikH08oUL3WjoXjlCkNYsFoBwLAduO76g6Z5iU9loPebTNXVdkz7UQTEoT11efTnnoNpwVIzips7etUjzMganD9Vte35KjopgeqChAWxundN74y8rHAAXiet6Eu5DM04qGVuCzMpwNra0kvRKT27eoS6B4xRFkM5Ai8mlaP81Wfj7dy5X1HTsY6qFR",
+        },
+        body: JSON.stringify({
+          auth_id: "122792814220057352",
+          secret_key:
+            "VB9ErlsiFQGfEOpME4HEb6bDXl2LcbKHLAGQbEVjHTAO4P1whIvjqCwg5BT1Fh0N0cSLCE48Hh8YWe2pVWrkcXZUkN0QrMnkJC9o",
+          contactNo: contactsend,
+          from: "ANJE-ANGOLA",
+          message: SmSmessage,
+        }),
+      });
+
+      const ressss = await resmessage.json();
+      console.log(ressss);
+
       setloading(false);
+
       toast.update(toaststate, {
         render: "aprovado",
         type: "success",
