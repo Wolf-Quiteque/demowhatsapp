@@ -512,7 +512,7 @@ const Profile = ({ user }) => {
                                     <>
                                       {" "}
                                       <option value="Diamante">
-                                        - 35.000,00 kz
+                                        Diamante - 35.000,00 kz
                                       </option>
                                       <option value="Platina">
                                         Platina - 20.000,00 kz
