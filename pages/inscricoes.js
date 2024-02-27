@@ -27,6 +27,7 @@ export default function GestaoUsuarios() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [usersslected, setusersslected] = useState([]);
+  const [naopago, setnaopago] = useState(false);
 
   var toaststate;
   var pagesarray = [];
@@ -284,14 +285,60 @@ export default function GestaoUsuarios() {
     setloading(false);
   };
 
+  const enviarNaopagomensagem = async () => {
+    toaststate = toast.loading("aguarde...", { closeOnClick: true });
+
+    var filter = Info;
+
+    const res = await fetch("/api/usuarios/usersmessage", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        info: filter,
+      }),
+    });
+    const data = await res.json();
+    const selectedusers = data.users;
+    var contactos = [];
+    for (let index = 0; index < selectedusers.length; index++) {
+      contactos.push(selectedusers[index].contacto);
+    }
+
+    const SmSmessage = `Seja bem-vindo(a) a ANJE-Angola, é uma honra tê-lo(a) como membro ANJE!\n\nA sua conta ANJE está activa, através do seu número de telefone registado e este código:, tens acesso a “1ª Conferência Anual de Jovens Mulheres Empresarias de Angola.” Dia 16 de Março no Centro de Conferência de Belas (CCB).\n\nAcesse o portal em: https://portal-eta-eight.vercel.app/login\n\nANJE Angola - “Uma Angola feita por todos, e melhor para todos“`;
+
+    const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accessToken:
+          "4xPR7x9Sn1njzYIMka7GD0vJKG6vP5Cm6liHjRTqR3CoDiPzYpr2kRg0Jj3twj7SfklkgZikH08oUL3WjoXjlCkNYsFoBwLAduO76g6Z5iU9loPebTNXVdkz7UQTEoT11efTnnoNpwVIzips7etUjzMganD9Vte35KjopgeqChAWxundN74y8rHAAXiet6Eu5DM04qGVuCzMpwNra0kvRKT27eoS6B4xRFkM5Ai8mlaP81Wfj7dy5X1HTsY6qFR",
+      },
+      body: JSON.stringify({
+        auth_id: "122792814220057352",
+        secret_key:
+          "VB9ErlsiFQGfEOpME4HEb6bDXl2LcbKHLAGQbEVjHTAO4P1whIvjqCwg5BT1Fh0N0cSLCE48Hh8YWe2pVWrkcXZUkN0QrMnkJC9o",
+        contactNo: contactos,
+        from: "ANJE-ANGOLA",
+        message: SmSmessage,
+      }),
+    });
+
+    const resp = await resmessage.json();
+    toast.update(toaststate, {
+      render: "enviado com sucesso",
+      type: "success",
+      isLoading: false,
+      closeOnClick: true,
+      autoClose: 1300,
+    });
+  };
+
   const [message, setMessage] = useState("");
 
   const handleAddEmoji = (emoji) => {
     setMessage(message + emoji.native);
-  };
-
-  const handleBoldText = () => {
-    setMessage(message + "**Bold Text**");
   };
 
   const handleAddNewParagraph = () => {
@@ -332,6 +379,7 @@ export default function GestaoUsuarios() {
                 <button
                   onClick={(e) => {
                     setinfo({});
+                    setnaopago(false);
                   }}
                   className="btn btn-sm btn-info mr-1"
                 >
@@ -342,6 +390,7 @@ export default function GestaoUsuarios() {
                     setinfo({
                       estado: true,
                     });
+                    setnaopago(false);
                   }}
                   className="btn btn-sm btn-success mr-1"
                 >
@@ -359,27 +408,52 @@ export default function GestaoUsuarios() {
                         { pago: { $eq: false } },
                       ],
                     });
+                    setnaopago(false);
                   }}
                   className="btn btn-sm btn-warning mr-1"
                 >
                   <i className="fa fa-coins"></i> pendentes
                 </button>
                 <button
+                  onClick={(e) => {
+                    setinfo({
+                      $or: [{ pago: { $exists: false } }, { pago: false }],
+                    });
+
+                    setnaopago(true);
+                  }}
+                  className="btn btn-sm btn-danger mr-1"
+                >
+                  <i className="fa fa-coins"></i>não aprovados
+                </button>
+                <button
                   onClick={() => {
                     setfilter(!filter);
+                    setnaopago(false);
                   }}
                   className="btn btn-sm btn-primary"
                 >
                   <i className="fa fa-filter"></i> filtros
                 </button>{" "}
-                <button
-                  onClick={(e) => {
-                    setShowMessageModal(true);
-                  }}
-                  className="btn btn-sm btn-warning mr-1"
-                >
-                  <i className="fa fa-envelope"></i> Enviar Mensagem
-                </button>
+                {naopago ? (
+                  <button
+                    onClick={(e) => {
+                      enviarNaopagomensagem();
+                    }}
+                    className="btn btn-sm btn-danger mr-1"
+                  >
+                    <i className="fa fa-envelope"></i> Enviar Mensagem
+                  </button>
+                ) : (
+                  <button
+                    onClick={(e) => {
+                      setShowMessageModal(true);
+                    }}
+                    className="btn btn-sm btn-warning mr-1"
+                  >
+                    <i className="fa fa-envelope"></i> Enviar Mensagem
+                  </button>
+                )}
                 <span className="mr-3">
                   {" "}
                   <strong>Nº:{" " + numberincritos}</strong>{" "}

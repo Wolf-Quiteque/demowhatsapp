@@ -558,14 +558,18 @@ const Dummy = () => {
                       </span>
                     )}
                   </div>
-                  <img
-                    src={post.imageUrl}
-                    className="card-img-top"
-                    style={{ cursor: "pointer" }}
-                    alt="Post"
-                  />
+                  {post && post.imageUrl && (
+                    <img
+                      src={post.imageUrl}
+                      className="card-img-top"
+                      style={{ cursor: "pointer" }}
+                      alt="Post"
+                    />
+                  )}
                   <div className="card-body">
-                    <p className="card-text">{post.content}</p>
+                    <p className="card-text">
+                      {post && post.content && post.content}
+                    </p>
                     <div className="d-flex justify-content-between align-items-center">
                       <div>
                         <small className="mr-1">
