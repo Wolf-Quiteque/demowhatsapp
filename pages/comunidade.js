@@ -441,7 +441,7 @@ const Dummy = () => {
                       <input
                         className="form-control"
                         type="text"
-                        placeholder="comentario"
+                        placeholder="tens algo a dizer?"
                         value={commentario}
                         onChange={(e) => {
                           setcommentario(e.target.value);

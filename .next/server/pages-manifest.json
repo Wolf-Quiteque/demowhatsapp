@@ -3,6 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/api/posts/allposts": "pages/api/posts/allposts.js",
-  "/api/posts/novo": "pages/api/posts/novo.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
+  "/api/posts/like": "pages/api/posts/like.js"
 }
