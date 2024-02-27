@@ -247,7 +247,7 @@ export default function Layout({ children }) {
                 {/* </ul> */}
 
                 <ul className="navbar-nav ml-auto">
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a
                       className="nav-link"
                       data-widget="navbar-search"
@@ -280,7 +280,7 @@ export default function Layout({ children }) {
                         </div>
                       </form>
                     </div>
-                  </li>
+                  </li> */}
                   <li></li>
 
                   <li className="nav-item">

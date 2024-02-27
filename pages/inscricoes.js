@@ -306,8 +306,7 @@ export default function GestaoUsuarios() {
       contactos.push(selectedusers[index].contacto);
     }
 
-    const SmSmessage = `Seja bem-vindo(a) a ANJE-Angola, é uma honra tê-lo(a) como membro ANJE!\n\nA sua conta ANJE está activa, através do seu número de telefone registado e este código:, tens acesso a “1ª Conferência Anual de Jovens Mulheres Empresarias de Angola.” Dia 16 de Março no Centro de Conferência de Belas (CCB).\n\nAcesse o portal em: https://portal-eta-eight.vercel.app/login\n\nANJE Angola - “Uma Angola feita por todos, e melhor para todos“`;
-
+    const SmSmessage = `Saudações caro membro!\n\nA sua conta ANJE está inactiva, por este motivo a nossa organização não consegue aprovar a sua Candidatura para o evento das mulheres empresárias , para activar entra em: https://portal-eta-eight.vercel.app/login, em pagamentos poderá pagar a sua quota escolhendo o pacote que mais se enquadra com a sua disponibilidade financeira, eis os pacotes abaixo:\n\nDiamante - 35.000,00kz\nPlatina - 20.000,00kz\nOuro - 10.000,00kz\nPrata - 5.000,00kz\nBronze - 1.000,00kz\n\nEsperamos tê-lo(a) na “1ª Conferência Anual de Jovens Mulheres Empresarias de Angola.” Dia 16 de Março no Centro de Conferência de Belas (CCB) pelas às 08H00.\n\nIBAN: AO06006600000676366110127\nNOME: ANJE ANGOLA ASS N P C J EMPRESARIOS.\n\nComprovativos e suporte técnico pelo: 925696426\n\nANJE Angola – “Uma Angola feita por todos, e melhor para todos”`;
     const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
       method: "POST",
       headers: {
