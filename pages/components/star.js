@@ -1,25 +1,45 @@
-function Star({ post, likedPosts, setLikedPosts }) {
-  const [clicked, setClicked] = useState(false);
-
-  useEffect(() => {
-    if (likedPosts.includes(post.id)) {
-      setClicked(true);
+function Star({ likes, id, user, posts, postArray }) {
+  var star = false;
+  if (likes) {
+    if (likes.includes(user.email)) {
+      star = true;
     }
-  }, [likedPosts, post.id]);
+  }
+
+  const like = async (id) => {
+    const res = await fetch("/api/posts/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: id, email: user.email }),
+    });
+  };
 
   const handleClick = () => {
-    if (!clicked) {
-      // Call the like function or any other action here
-      setLikedPosts([...likedPosts, post.id]);
-      setClicked(true);
+    if (!star) {
+      postArray = posts;
+      let post = postArray.find((post) => post._id === id);
+      if (post) {
+        if (post.likes) {
+          post.likes.push(user.email);
+        } else {
+          post.likes = [];
+          post.likes.push(user.email);
+        }
+        star = true;
+        like(id, user.email);
+      }
     }
   };
 
   return (
     <i
-      className={`fa fa-star me-2 ${clicked ? "text-warning" : ""}`}
+      className={`fa fa-star me-2 ${star ? "text-warning" : ""}`}
       style={{ cursor: "pointer" }}
       onClick={handleClick}
     ></i>
   );
 }
+
+export default Star;
