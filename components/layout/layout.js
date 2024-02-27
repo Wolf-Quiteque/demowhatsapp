@@ -120,40 +120,38 @@ export default function Layout({ children }) {
                   </li>
                   <li className="nav-item ">
                     <Link href="/comunidade">
-                     <a
-                      className="nav-link"
-                      role="button"
-                     
-                    >
-                      <i className={`fas fa-globe ${router.pathname=="/comunidade" &&(" text-primary")}`}></i>
-                    </a>
+                      <a className="nav-link" role="button">
+                        <i
+                          className={`fas fa-home ${
+                            router.pathname == "/comunidade" && " text-primary"
+                          }`}
+                        ></i>
+                      </a>
                     </Link>
-                   
                   </li>
                   <li className="nav-item ">
-                  <Link href="/live">
-                     <a
-                      className="nav-link"
-                      role="button"
-                     
-                    >
-                      <i className={`fas fa-podcast ${router.pathname=="/live" &&(" text-primary")}`}></i>
-                    </a>
+                    <Link href="/live">
+                      <a className="nav-link" role="button">
+                        <i
+                          className={`fas fa-podcast ${
+                            router.pathname == "/live" && " text-primary"
+                          }`}
+                        ></i>
+                      </a>
                     </Link>
                   </li>
 
                   <li className="nav-item ">
-                  <Link href="/membros">
-                     <a
-                      className="nav-link"
-                      role="button"
-                     
-                    >
-                      <i className={`fas fa-users ${router.pathname=="/membros" &&(" text-primary")}`}></i>
-                    </a>
+                    <Link href="/membros">
+                      <a className="nav-link" role="button">
+                        <i
+                          className={`fas fa-users ${
+                            router.pathname == "/membros" && " text-primary"
+                          }`}
+                        ></i>
+                      </a>
                     </Link>
                   </li>
-
                 </ul>
 
                 {/* <li className="nav-item dropdown">
@@ -249,8 +247,6 @@ export default function Layout({ children }) {
                 {/* </ul> */}
 
                 <ul className="navbar-nav ml-auto">
-              
-              
                   <li className="nav-item">
                     <a
                       className="nav-link"
@@ -301,14 +297,14 @@ export default function Layout({ children }) {
                   </li>
 
                   <li className="nav-item">
-                  <Link href="/perfil">
-                     <a
-                      className="nav-link"
-                      role="button"
-                     
-                    >
-                      <i className={`fas fa-user ${router.pathname=="/perfil" &&(" text-primary")}`}></i>
-                    </a>
+                    <Link href="/perfil">
+                      <a className="nav-link" role="button">
+                        <i
+                          className={`fas fa-user ${
+                            router.pathname == "/perfil" && " text-primary"
+                          }`}
+                        ></i>
+                      </a>
                     </Link>
                   </li>
                 </ul>
