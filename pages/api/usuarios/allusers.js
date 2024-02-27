@@ -38,6 +38,8 @@ export default async function handler(req, res) {
     // Get the total count without pagination
     const total = await db.collection("usuarios").countDocuments(info);
 
+
+
     // Calculate the total number of pages
     const totalPages = Math.ceil(total / perPage);
 

@@ -511,10 +511,10 @@ const Profile = ({ user }) => {
                                   {tipoconta == "Membro" && (
                                     <>
                                       {" "}
-                                      <option value="Platina">
-                                        Diamante - 35.000,00 kz
-                                      </option>
                                       <option value="Diamante">
+                                        - 35.000,00 kz
+                                      </option>
+                                      <option value="Platina">
                                         Platina - 20.000,00 kz
                                       </option>
                                       <option value="Ouro">
@@ -532,10 +532,10 @@ const Profile = ({ user }) => {
                                   {tipoconta == "Parceiro" && (
                                     <>
                                       {" "}
-                                      <option value="Platina">
+                                      <option value="Diamante">
                                         Diamante - 100.000,00 kz
                                       </option>
-                                      <option value="Diamante">
+                                      <option value="Platina">
                                         Platina - 75.000,00 kz
                                       </option>
                                       <option value="Ouro">
@@ -700,7 +700,7 @@ const Profile = ({ user }) => {
                             onChange={(e) => {
                               setsenhaAntiga(e.target.value);
                             }}
-                            placeholder="digite nova senha"
+                            placeholder="digite senha"
                           />
                         </div>
                       </div>
@@ -713,7 +713,7 @@ const Profile = ({ user }) => {
                             type="password"
                             className="form-control"
                             name="password"
-                            placeholder="snova senha"
+                            placeholder="nova senha"
                             onChange={(e) => {
                               setsenhaNova(e.target.value);
                             }}

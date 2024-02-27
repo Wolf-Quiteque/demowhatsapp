@@ -195,10 +195,10 @@ export default function Register() {
                           {tipoconta == "Membro" && (
                             <>
                               {" "}
-                              <option value="Platina">
+                              <option value="Diamante">
                                 Diamante - 35.000,00 kz
                               </option>
-                              <option value="Diamante">
+                              <option value="Platina">
                                 Platina - 20.000,00 kz
                               </option>
                               <option value="Ouro">Ouro - 10.000,00 kz</option>
@@ -212,10 +212,10 @@ export default function Register() {
                           {tipoconta == "Parceiro" && (
                             <>
                               {" "}
-                              <option value="Platina">
+                              <option value="Diamante">
                                 Diamante - 100.000,00 kz
                               </option>
-                              <option value="Diamante">
+                              <option value="Platina">
                                 Platina - 75.000,00 kz
                               </option>
                               <option value="Ouro">Ouro - 50.000,00 kz</option>

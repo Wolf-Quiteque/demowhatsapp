@@ -68,14 +68,14 @@ export default function Layout({ children }) {
 
   // };
 
-  useEffect(() => {
-    $("#inactiveAccountModal").modal("show");
+  // useEffect(() => {
+  //   $("#inactiveAccountModal").modal("show");
 
-    $("#inactiveAccountModal").modal({
-      backdrop: "static",
-      keyboard: false,
-    });
-  }, []);
+  //   $("#inactiveAccountModal").modal({
+  //     backdrop: "static",
+  //     keyboard: false,
+  //   });
+  // }, []);
 
   useEffect(() => {
     getsession();
@@ -118,6 +118,42 @@ export default function Layout({ children }) {
                       <i className="fas fa-bars"></i>
                     </a>
                   </li>
+                  <li className="nav-item ">
+                    <Link href="/comunidade">
+                     <a
+                      className="nav-link"
+                      role="button"
+                     
+                    >
+                      <i className={`fas fa-globe ${router.pathname=="/comunidade" &&(" text-primary")}`}></i>
+                    </a>
+                    </Link>
+                   
+                  </li>
+                  <li className="nav-item ">
+                  <Link href="/live">
+                     <a
+                      className="nav-link"
+                      role="button"
+                     
+                    >
+                      <i className={`fas fa-podcast ${router.pathname=="/live" &&(" text-primary")}`}></i>
+                    </a>
+                    </Link>
+                  </li>
+
+                  <li className="nav-item ">
+                  <Link href="/membros">
+                     <a
+                      className="nav-link"
+                      role="button"
+                     
+                    >
+                      <i className={`fas fa-users ${router.pathname=="/membros" &&(" text-primary")}`}></i>
+                    </a>
+                    </Link>
+                  </li>
+
                 </ul>
 
                 {/* <li className="nav-item dropdown">
@@ -213,6 +249,8 @@ export default function Layout({ children }) {
                 {/* </ul> */}
 
                 <ul className="navbar-nav ml-auto">
+              
+              
                   <li className="nav-item">
                     <a
                       className="nav-link"
@@ -228,7 +266,7 @@ export default function Layout({ children }) {
                           <input
                             className="form-control form-control-navbar"
                             type="search"
-                            placeholder="Pesquisar Empresa"
+                            placeholder="Pesquisar Membro"
                             aria-label="Search"
                           />
                           <div className="input-group-append">
@@ -263,16 +301,15 @@ export default function Layout({ children }) {
                   </li>
 
                   <li className="nav-item">
-                    <a
+                  <Link href="/perfil">
+                     <a
                       className="nav-link"
-                      onClick={() => {
-                        router.replace("/perfil");
-                      }}
-                      href="#"
                       role="button"
+                     
                     >
-                      <i className="fas fa-user"></i>
+                      <i className={`fas fa-user ${router.pathname=="/perfil" &&(" text-primary")}`}></i>
                     </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
