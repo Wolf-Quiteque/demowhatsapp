@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Register() {
   const router = useRouter();
@@ -18,6 +19,17 @@ export default function Register() {
   const [ultimoNome, setultimoNome] = useState("");
   const [bi, setbi] = useState("");
   const [classe, setclasse] = useState("");
+
+  const { data: session, status } = useSession();
+  const getsession = async () => {
+    if (status === "authenticated") {
+      router.replace("/perfil");
+    }
+  };
+
+  useEffect(() => {
+    getsession();
+  }, [status]);
 
   const provincesList = [
     "Bengo",
