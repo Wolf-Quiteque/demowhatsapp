@@ -326,9 +326,18 @@ export default function Layout({ children }) {
                   <div className="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div className="image">
                       <img
-                        src="https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
+                        src={
+                          usuario && usuario.avatar
+                            ? usuario.avatar
+                            : "https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
+                        }
                         className="img-circle elevation-2"
                         alt="User Image"
+                        style={{
+                          objectFit: "cover",
+                          width: "45px", // Defina a largura desejada
+                          height: "45px",
+                        }}
                       />
                     </div>
                     <div className="info">

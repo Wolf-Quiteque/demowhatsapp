@@ -21,6 +21,9 @@ const Profile = ({ user }) => {
 
   const [senhaNova, setsenhaNova] = useState("");
   const [senhaConfirmar, setsenhaConfirmar] = useState("");
+  const [ProfileFile, setProfileFile] = useState("");
+  const [ProfilePic, setProfilePic] = useState("");
+
   const [loading, setloading] = useState(false);
 
   const [education, setEducation] = useState(usuario ? usuario.educacao : "");
@@ -29,6 +32,52 @@ const Profile = ({ user }) => {
 
   const [skills, setSkills] = useState(usuario ? usuario.habilidades : "");
   const [notes, setNotes] = useState(usuario ? usuario.motivacao : "");
+
+  const uploadpic = async () => {
+    toaststate = toast.loading("aguarde...", { closeOnClick: true });
+    setloading(true);
+
+    const data = new FormData();
+    const fileName = Date.now() + ProfileFile.name;
+    data.append("file", ProfileFile);
+    data.append("name", fileName);
+    data.append("upload_preset", "rvtitoz5");
+
+    const result = await fetch(
+      "https://api.cloudinary.com/v1_1/dup24qnij/image/upload",
+      {
+        method: "Post",
+        body: data,
+      }
+    ).then((r) => r.json());
+
+    try {
+      await fetch("/api/usuarios/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          email: usuario.email,
+          avatar: result.secure_url,
+        }),
+      });
+
+      Getuser();
+    } catch (error) {
+      console.log(error);
+    }
+
+    toast.update(toaststate, {
+      render: "carregado",
+      type: "success",
+      isLoading: false,
+      closeOnClick: true,
+      autoClose: 300,
+    });
+    setloading(false);
+  };
 
   const addcomprovativo = async () => {
     toaststate = toast.loading("aguarde...", { closeOnClick: true });
@@ -208,7 +257,8 @@ const Profile = ({ user }) => {
       });
 
       const response = await res.json();
-
+      setProfileFile("");
+      setProfilePic("");
       setusuario(response);
       setEncryptedCookie("authsesh", response);
     } catch (error) {
@@ -255,9 +305,65 @@ const Profile = ({ user }) => {
                 <div className="text-center">
                   <img
                     className="profile-user-img img-fluid img-circle"
-                    src="https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
+                    src={
+                      usuario && usuario.avatar
+                        ? usuario.avatar
+                        : ProfilePic
+                        ? ProfilePic
+                        : "https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
+                    }
                     alt="User profile picture"
+                    style={{
+                      objectFit: "cover",
+                      width: "100px", // Defina a largura desejada
+                      height: "100px",
+                    }}
                   />
+                  <div style={{ marginTop: "-30px", marginLeft: "80px" }}>
+                    {ProfilePic ? (
+                      <>
+                        <a
+                          className="btn btn-info btn-sm btn-danger"
+                          onClick={() => {
+                            setProfileFile("");
+                            setProfilePic("");
+                          }}
+                        >
+                          <i className="fa fa-trash"></i>
+                        </a>
+                        <a
+                          onClick={() => {
+                            uploadpic();
+                          }}
+                          className="btn btn-sm btn-success ml-1"
+                        >
+                          <i className="fa fa-check"></i>
+                        </a>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="profilpic">
+                      {!ProfilePic ? (
+                        <a className="btn btn-info btn-sm">
+                          <i className="fa fa-camera"></i>{" "}
+                        </a>
+                      ) : (
+                        ""
+                      )}
+
+                      <input
+                        type="file"
+                        id="profilpic"
+                        accept=".png, .jpeg, .jpg,"
+                        onChange={(e) => {
+                          setProfileFile(e.target.files[0]);
+                          setProfilePic(URL.createObjectURL(e.target.files[0]));
+                        }}
+                        style={{ display: "none" }}
+                      />
+                    </label>
+                  </div>
                 </div>
 
                 {usuario && usuario.estado ? (
