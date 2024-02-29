@@ -30,6 +30,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/comunidade.js"
     ],
+    "/membros": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/membros.js"
+    ],
     "/perfil": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

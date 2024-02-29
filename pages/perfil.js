@@ -24,9 +24,15 @@ const Profile = ({ user }) => {
   const [ProfileFile, setProfileFile] = useState("");
   const [ProfilePic, setProfilePic] = useState("");
 
+  const [Coverphoto, setCoverphoto] = useState("");
+
+  const [CoverFile, setCoverFile] = useState("");
+
   const [loading, setloading] = useState(false);
 
   const [education, setEducation] = useState(usuario ? usuario.educacao : "");
+  const [profissao, setProfissao] = useState(usuario ? usuario.profissao : "");
+
   const [classe, setclasse] = useState(usuario ? usuario.classe : "");
   const [tipoconta, settipoconta] = useState(usuario ? usuario.tipo : "");
 
@@ -61,6 +67,52 @@ const Profile = ({ user }) => {
         body: JSON.stringify({
           email: usuario.email,
           avatar: result.secure_url,
+        }),
+      });
+
+      Getuser();
+    } catch (error) {
+      console.log(error);
+    }
+
+    toast.update(toaststate, {
+      render: "carregado",
+      type: "success",
+      isLoading: false,
+      closeOnClick: true,
+      autoClose: 300,
+    });
+    setloading(false);
+  };
+
+  const uploadcover = async () => {
+    toaststate = toast.loading("aguarde...", { closeOnClick: true });
+    setloading(true);
+
+    const data = new FormData();
+    const fileName = Date.now() + CoverFile.name;
+    data.append("file", CoverFile);
+    data.append("name", fileName);
+    data.append("upload_preset", "rvtitoz5");
+
+    const result = await fetch(
+      "https://api.cloudinary.com/v1_1/dup24qnij/image/upload",
+      {
+        method: "Post",
+        body: data,
+      }
+    ).then((r) => r.json());
+
+    try {
+      await fetch("/api/usuarios/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          email: usuario.email,
+          cover: result.secure_url,
         }),
       });
 
@@ -215,6 +267,7 @@ const Profile = ({ user }) => {
           educacao: education,
           habilidades: skills,
           motivacao: notes,
+          profissao: profissao,
         }),
       });
       Getuser();
@@ -259,6 +312,8 @@ const Profile = ({ user }) => {
       const response = await res.json();
       setProfileFile("");
       setProfilePic("");
+      setCoverFile("");
+      setCoverphoto("");
       setusuario(response);
       setEncryptedCookie("authsesh", response);
     } catch (error) {
@@ -302,23 +357,98 @@ const Profile = ({ user }) => {
           <div className="col-md-3">
             <div className="card card-primary card-outline">
               <div className="card-body box-profile">
-                <div className="text-center">
-                  <img
-                    className="profile-user-img img-fluid img-circle"
-                    src={
-                      usuario && usuario.avatar
-                        ? usuario.avatar
-                        : ProfilePic
-                        ? ProfilePic
-                        : "https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
-                    }
-                    alt="User profile picture"
-                    style={{
-                      objectFit: "cover",
-                      width: "100px", // Defina a largura desejada
-                      height: "100px",
-                    }}
-                  />
+                <div
+                  className="text-center"
+                  style={{
+                    backgroundImage: Coverphoto
+                      ? `url('${Coverphoto}')`
+                      : usuario && usuario.cover
+                      ? `url('${usuario.cover}')`
+                      : "url('/img/hero-bgg1.jpg')",
+                    backgroundPosition: "center",
+                    backgroundSize: "contain", // Garante que a imagem seja totalmente visív
+                    Maxwidth: "auto",
+                    Maxheight: "auto",
+                    backgroundRepeat: "no-repeat",
+                    padding: "10px",
+                  }}
+                >
+                  <div className="float-right" style={{ marginRight: "-15px" }}>
+                    {Coverphoto ? (
+                      <>
+                        <a
+                          className="btn btn-info btn-sm btn-danger"
+                          onClick={() => {
+                            setCoverFile("");
+                            setCoverphoto("");
+                          }}
+                        >
+                          <i className="fa fa-trash"></i>
+                        </a>
+                        <a
+                          onClick={() => {
+                            uploadcover();
+                          }}
+                          className="btn btn-sm btn-success ml-1"
+                        >
+                          <i className="fa fa-check"></i>
+                        </a>
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <label htmlFor="coverfile">
+                      {!Coverphoto ? (
+                        <span
+                          className="badge badge-info"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <i className="fa fa-image"></i>{" "}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+
+                      <input
+                        type="file"
+                        id="coverfile"
+                        accept=".png, .jpeg, .jpg,"
+                        onChange={(e) => {
+                          setCoverFile(e.target.files[0]);
+                          setCoverphoto(URL.createObjectURL(e.target.files[0]));
+                        }}
+                        style={{ display: "none" }}
+                      />
+                    </label>
+                  </div>
+
+                  {ProfilePic ? (
+                    <img
+                      className="profile-user-img img-fluid img-circle"
+                      src={ProfilePic}
+                      alt="User profile picture"
+                      style={{
+                        objectFit: "cover",
+                        width: "100px", // Defina a largura desejada
+                        height: "100px",
+                      }}
+                    />
+                  ) : (
+                    <img
+                      className="profile-user-img img-fluid img-circle"
+                      src={
+                        usuario && usuario.avatar
+                          ? usuario.avatar
+                          : "https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
+                      }
+                      alt="User profile picture"
+                      style={{
+                        objectFit: "cover",
+                        width: "100px", // Defina a largura desejada
+                        height: "100px",
+                      }}
+                    />
+                  )}
                   <div style={{ marginTop: "-30px", marginLeft: "80px" }}>
                     {ProfilePic ? (
                       <>
@@ -387,9 +517,11 @@ const Profile = ({ user }) => {
                       " " +
                       usuario.ultimonome.slice(0, 8)}
                 </h3>
+
                 <p className="text-muted text-center">
                   {usuario && usuario.classe}
                 </p>
+
                 <ul className="list-group list-group-unbordered mb-3">
                   <li className="list-group-item">
                     <b>Parceiros</b>{" "}
@@ -415,6 +547,14 @@ const Profile = ({ user }) => {
               <div className="card-body">
                 {isEditMode ? (
                   <>
+                    <strong>
+                      <i className="fas fa-certificate mr-1"></i> Profissão
+                    </strong>
+                    <textarea
+                      className="form-control"
+                      value={profissao}
+                      onChange={(e) => setProfissao(e.target.value)}
+                    />
                     <strong>
                       <i className="fas fa-book mr-1"></i> Educação
                     </strong>
@@ -452,6 +592,11 @@ const Profile = ({ user }) => {
                   </>
                 ) : (
                   <>
+                    <strong>
+                      <i className="fas fa-certificate mr-1"></i> Profissão
+                    </strong>
+                    <p className="text-muted">{profissao}</p>
+                    <hr />
                     <strong>
                       <i className="fas fa-book mr-1"></i> Educação
                     </strong>

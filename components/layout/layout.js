@@ -82,6 +82,9 @@ export default function Layout({ children }) {
     if (usuario == null) {
       getuser();
     }
+    setInterval(() => {
+      getuser();
+    }, 5000); // Intervalo de 5 segundos
 
     setnewstatus(status);
   }, [status, session]);
@@ -129,7 +132,7 @@ export default function Layout({ children }) {
                       </a>
                     </Link>
                   </li>
-                  <li className="nav-item ">
+                  {/* <li className="nav-item ">
                     <Link href="/live">
                       <a className="nav-link" role="button">
                         <i
@@ -139,7 +142,7 @@ export default function Layout({ children }) {
                         ></i>
                       </a>
                     </Link>
-                  </li>
+                  </li> */}
 
                   <li className="nav-item ">
                     <Link href="/membros">

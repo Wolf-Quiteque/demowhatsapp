@@ -197,7 +197,7 @@ const Dummy = () => {
   return (
     <div className="container">
       <Head>
-        <title>Communidade</title>
+        <title>Communidade - Anje-Angola</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
