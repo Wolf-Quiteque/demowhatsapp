@@ -155,15 +155,18 @@ export default function Profile({ usuario }) {
 }
 
 export async function getServerSideProps(context) {
-  const data = await fetch("http://localhost:3000/api/usuarios/user", {
-    method: "Post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      email: context.query.id,
-    }),
-  });
+  const data = await fetch(
+    "https://portal-eta-eight.vercel.app/api/usuarios/user",
+    {
+      method: "Post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: context.query.id,
+      }),
+    }
+  );
   const usuario = await data.json();
   return {
     props: { usuario },

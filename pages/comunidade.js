@@ -323,7 +323,7 @@ const Dummy = () => {
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row mt-2">
           {" "}
           <div
             className={`modal ${modalComment ? "show" : ""}`}
@@ -495,7 +495,7 @@ const Dummy = () => {
           {posts.map((post) => (
             <>
               <div className="col-md-4"></div>
-              <div key={post._id} className="col-sm-12 col-md-4 mb-4">
+              <div key={post._id} className="col-sm-12 col-md-4 mt-2 mb-4">
                 <div className="card">
                   <div
                     className="card-header"
