@@ -155,6 +155,18 @@ export default function Layout({ children }) {
                       </a>
                     </Link>
                   </li>
+
+                  <li className="nav-item ">
+                    <Link href="/inbox">
+                      <a className="nav-link" role="button">
+                        <i
+                          className={`fas fa-envelope ${
+                            router.pathname == "/inbox" && " text-primary"
+                          }`}
+                        ></i>
+                      </a>
+                    </Link>
+                  </li>
                 </ul>
 
                 {/* <li className="nav-item dropdown">

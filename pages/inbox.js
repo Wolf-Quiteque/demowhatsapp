@@ -9,7 +9,7 @@ export default function Dummy() {
   return (
     <div className="container">
       <Head>
-        <title>Dummy</title>
+        <title>Inbox</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -19,7 +19,6 @@ export default function Dummy() {
         <div className="row">
           <div className="col-md-12">
             <h3 className="mt-3 mb-3">Brevemente</h3>
-            <h1>Criação de Live</h1>
           </div>
         </div>
       </main>

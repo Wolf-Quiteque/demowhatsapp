@@ -7,8 +7,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const cliente = await clientPromise;
-    const db = cliente.db("anje");
+    const client = await clientPromise;
+    const db = client.db("anje");
     const result = await db
       .collection("posts")
       .aggregate([
@@ -38,6 +38,9 @@ export default async function handler(req, res) {
             comments: 1,
             likes: 1,
           },
+        },
+        {
+          $sort: { timestamp: -1 }, // Sort by timestamp in descending order (latest first)
         },
       ])
       .toArray();
