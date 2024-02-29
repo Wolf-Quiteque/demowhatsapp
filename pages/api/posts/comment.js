@@ -6,6 +6,8 @@ async function handler(req, res) {
 
   var data = req.body;
   delete data.id;
+  delete data.avatar;
+
   const client = await clientPromise;
   const db = client.db("anje");
 

@@ -77,28 +77,29 @@ const Dummy = () => {
     setPosts(resul);
   };
 
-  // const allcoments = async () => {
-  //   const res = await fetch("/api/posts/allcoments", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ id: activePostId }),
-  //   });
+  const allcoments = async (id) => {
+    const res = await fetch("/api/posts/allcoments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: id }),
+    });
 
-  //   const resul = await res.json();
-  //   setcommentarios(resul);
-  // };
+    const resul = await res.json();
+    setcommentarios(resul);
+  };
 
   const EvniarComentario = async () => {
     const timestamp = new Date();
     var comment = {
       id: activePostId,
       nome: user.nome,
-      classe: user.classe,
+      email: user.email,
+      classe: [user.classe],
       timestamp: timestamp,
+      avatar: [user.avatar],
       commentario: commentario,
-      newtimestamp: timestamp,
     };
 
     if (commentarios) {
@@ -351,20 +352,32 @@ const Dummy = () => {
                       {commentarios &&
                         commentarios.map((c) => (
                           <div className="card-comment">
+                            <img
+                              className="img-circle img-sm"
+                              src={
+                                c.avatar
+                                  ? c.avatar
+                                  : "https://picsum.photos/200/300"
+                              }
+                              alt="User Image"
+                              style={{
+                                objectFit: "cover",
+                              }}
+                            />
                             <div className="comment-text">
                               <span className="username">
                                 {c.nome}
-                                {c.classe === "diamante" && (
+                                {c.classe[0] === "diamante" && (
                                   <span className="badge float-right bg-primary ml-3">
                                     Diamante
                                   </span>
                                 )}
-                                {c.classe === "ouro" && (
+                                {c.classe[0] === "ouro" && (
                                   <span className="badge float-right bg-warning ml-3">
                                     Ouro
                                   </span>
                                 )}
-                                {c.classe === "platina" && (
+                                {c.classe[0] === "platina" && (
                                   <span
                                     className="badge float-right bg-silver ml-3"
                                     style={{ backgroundColor: "#424242" }}
@@ -373,7 +386,7 @@ const Dummy = () => {
                                   </span>
                                 )}
 
-                                {c.classe === "prata" && (
+                                {c.classe[0] === "prata" && (
                                   <span
                                     className="badge float-right bg-silverlight ml-3"
                                     style={{ backgroundColor: "#424242" }}
@@ -382,7 +395,7 @@ const Dummy = () => {
                                   </span>
                                 )}
 
-                                {c.classe === "bronze" && (
+                                {c.classe[0] === "bronze" && (
                                   <span
                                     className="badge float-right bg-brown ml-3"
                                     style={{ backgroundColor: "#8b4513" }}
@@ -391,17 +404,17 @@ const Dummy = () => {
                                   </span>
                                 )}
 
-                                {c.classe === "Diamante" && (
+                                {c.classe[0] === "Diamante" && (
                                   <span className="badge float-right bg-primary ml-3">
                                     Diamante
                                   </span>
                                 )}
-                                {c.classe === "Ouro" && (
+                                {c.classe[0] === "Ouro" && (
                                   <span className="badge float-right bg-warning ml-3">
                                     Ouro
                                   </span>
                                 )}
-                                {c.classe === "Platina" && (
+                                {c.classe[0] === "Platina" && (
                                   <span
                                     className="badge float-right bg-silver ml-3"
                                     style={{ backgroundColor: "#424242" }}
@@ -410,7 +423,7 @@ const Dummy = () => {
                                   </span>
                                 )}
 
-                                {c.classe === "Prata" && (
+                                {c.classe[0] === "Prata" && (
                                   <span
                                     className="badge float-right bg-silverlight ml-3"
                                     style={{ backgroundColor: "#424242" }}
@@ -419,7 +432,7 @@ const Dummy = () => {
                                   </span>
                                 )}
 
-                                {c.classe === "Bronze" && (
+                                {c.classe[0] === "Bronze" && (
                                   <span
                                     className="badge float-right bg-brown ml-3"
                                     style={{ backgroundColor: "#8b4513" }}
@@ -579,9 +592,9 @@ const Dummy = () => {
                           className="fa fa-comment mr-2"
                           style={{ cursor: "pointer" }}
                           onClick={() => {
-                            handleCommentClick(post.imageUrl);
+                            handleCommentClick(post._id);
                             setactivePostId(post._id);
-                            setcommentarios(post.comments);
+                            allcoments(post._id);
                           }}
                         ></i>{" "}
                         <small className="mr-1">

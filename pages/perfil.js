@@ -439,7 +439,7 @@ const Profile = ({ user }) => {
                       src={
                         usuario && usuario.avatar
                           ? usuario.avatar
-                          : "https://cdn-icons-png.flaticon.com/128/1144/1144760.png"
+                          : "https://picsum.photos/200/300"
                       }
                       alt="User profile picture"
                       style={{
