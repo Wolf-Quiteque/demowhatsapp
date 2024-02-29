@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/posts/allposts": "pages/api/posts/allposts.js",
   "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/comunidade": "pages/comunidade.js"
+  "/api/posts/allposts": "pages/api/posts/allposts.js",
+  "/membro/[id]": "pages/membro/[id].js",
+  "/api/usuarios/user": "pages/api/usuarios/user.js"
 }

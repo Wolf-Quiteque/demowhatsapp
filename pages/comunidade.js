@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getDecryptedCookie } from "../lib/session";
 import Star from "./components/star";
+import { useRouter } from "next/router";
 
 const Dummy = () => {
   // Sample data for social media posts
@@ -12,7 +13,10 @@ const Dummy = () => {
 
   const [modalComment, setModalComment] = useState(null);
   const [newPostCaption, setNewPostCaption] = useState("");
+
   const [file, setfile] = useState(null);
+  const router = useRouter();
+
   const [likedPosts, setLikedPosts] = useState([]);
   const [likes, setlikes] = useState([]);
 
@@ -491,9 +495,15 @@ const Dummy = () => {
           {posts.map((post) => (
             <>
               <div className="col-md-4"></div>
-              <div key={post.id} className="col-sm-12 col-md-4 mb-4">
+              <div key={post._id} className="col-sm-12 col-md-4 mb-4">
                 <div className="card">
-                  <div className="card-header">
+                  <div
+                    className="card-header"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      router.replace("/membro/" + post.email);
+                    }}
+                  >
                     <img
                       className="direct-chat-img mr-3"
                       style={{ height: "30px", width: "30px" }}

@@ -37,6 +37,7 @@ export default async function handler(req, res) {
             timestamp: 1,
             comments: 1,
             likes: 1,
+            email: 1,
           },
         },
         {

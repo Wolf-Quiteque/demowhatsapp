@@ -329,7 +329,7 @@ export default function Layout({ children }) {
                 <Link href="/">
                   <a class="brand-link">
                     <img
-                      src="img/logo.png"
+                      src="/img/logo.png"
                       alt="ANJE"
                       className="img-fluid"
                       style={{ opacity: " .8" }}

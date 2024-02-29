@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/comunidade.js"
     ],
-    "/membros": [
+    "/membro/[id]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/membros.js"
+      "static/chunks/pages/membro/[id].js"
     ]
   },
   "ampFirstPages": []
