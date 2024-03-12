@@ -87,9 +87,10 @@ export default function GestaoUsuarios() {
           accessToken: "YOUR_ACCESS_TOKEN", // Replace with your access token
         },
         body: JSON.stringify({
-          auth_id: "YOUR_AUTH_ID", // Replace with your auth ID
-          secret_key: "YOUR_SECRET_KEY", // Replace with your secret key
-          contactNo: contactos,
+          auth_id: "122792814220057352",
+          secret_key:
+            "VB9ErlsiFQGfEOpME4HEb6bDXl2LcbKHLAGQbEVjHTAO4P1whIvjqCwg5BT1Fh0N0cSLCE48Hh8YWe2pVWrkcXZUkN0QrMnkJC9o",
+         contactNo: contactos,
           from: "ANJE-ANGOLA",
           message: message,
         }),
