@@ -58,10 +58,10 @@ export default function GestaoUsuarios() {
   }
 
   const sendmessage = async () => {
-    toaststate = toast.loading("aguarde...", { closeOnClick: true });
-
+    toaststate = toast.loading("Please wait...", { closeOnClick: true });
+  
     var filter = Info;
-
+  
     const res = await fetch("/api/usuarios/usersmessage", {
       method: "POST",
       headers: {
@@ -71,41 +71,45 @@ export default function GestaoUsuarios() {
         info: filter,
       }),
     });
+  
     const data = await res.json();
-    const selectedusers = data.users;
+    const selectedusers = [{contacto: 942218877}, {contacto: 929618206}];
     var contactos = [];
+    const responses = []; // Array to store responses
+  
     for (let index = 0; index < selectedusers.length; index++) {
+      contactos = [];
       contactos.push(selectedusers[index].contacto);
+      const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accessToken: "YOUR_ACCESS_TOKEN", // Replace with your access token
+        },
+        body: JSON.stringify({
+          auth_id: "YOUR_AUTH_ID", // Replace with your auth ID
+          secret_key: "YOUR_SECRET_KEY", // Replace with your secret key
+          contactNo: contactos,
+          from: "ANJE-ANGOLA",
+          message: message,
+        }),
+      });
+  
+      const resp = await resmessage.json();
+      responses.push(resp); // Store response in array
     }
-
-    const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accessToken:
-          "4xPR7x9Sn1njzYIMka7GD0vJKG6vP5Cm6liHjRTqR3CoDiPzYpr2kRg0Jj3twj7SfklkgZikH08oUL3WjoXjlCkNYsFoBwLAduO76g6Z5iU9loPebTNXVdkz7UQTEoT11efTnnoNpwVIzips7etUjzMganD9Vte35KjopgeqChAWxundN74y8rHAAXiet6Eu5DM04qGVuCzMpwNra0kvRKT27eoS6B4xRFkM5Ai8mlaP81Wfj7dy5X1HTsY6qFR",
-      },
-      body: JSON.stringify({
-        auth_id: "122792814220057352",
-        secret_key:
-          "VB9ErlsiFQGfEOpME4HEb6bDXl2LcbKHLAGQbEVjHTAO4P1whIvjqCwg5BT1Fh0N0cSLCE48Hh8YWe2pVWrkcXZUkN0QrMnkJC9o",
-        contactNo: contactos,
-        from: "ANJE-ANGOLA",
-        message: message,
-      }),
-    });
-
-    const resp = await resmessage.json();
-    console.log(resp);
+  
     toast.update(toaststate, {
-      render: "enviado com sucesso",
+      render: "Message sent successfully",
       type: "success",
       isLoading: false,
       closeOnClick: true,
       autoClose: 1300,
     });
+  
+    console.log(responses); // Do whatever you need with the responses
   };
-
+  
   const getsesh = async () => {
     const response = await getDecryptedCookie("authsesh");
     if (response) {
