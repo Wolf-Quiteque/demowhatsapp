@@ -73,7 +73,8 @@ export default function GestaoUsuarios() {
     });
   
     const data = await res.json();
-    const selectedusers = [{contacto: 942218877}, {contacto: 929618206}];
+    const selectedusers = data.users;
+
     var contactos = [];
     const responses = []; // Array to store responses
   
@@ -84,7 +85,8 @@ export default function GestaoUsuarios() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          accessToken: "YOUR_ACCESS_TOKEN", // Replace with your access token
+          accessToken:
+            "c4hlDrs2NjzTz9WF1IKDOiJuOxycKVBUvtecSMerq15Hjmxhw6bQ7M2AwVhJ5cJtv1vQJaEKa7vTbF4MsoP0ROKG5xvwgmnbVoK7BUvxGDsmN35YccxK1odj3lsxdYJW8ns55keJoyAdsIPAQ5V2nwiP0ZZRupIl9U3OqbyHi0XQGFSs8BaULBIslrn8bMXISAFdskFBjcz9h88hukLEivstqUNjusB5e7iYbOImhYFzb9musyXIlsIfdVHKefa",
         },
         body: JSON.stringify({
           auth_id: "122792814220057352",
@@ -242,7 +244,7 @@ export default function GestaoUsuarios() {
         headers: {
           "Content-Type": "application/json",
           accessToken:
-            "4xPR7x9Sn1njzYIMka7GD0vJKG6vP5Cm6liHjRTqR3CoDiPzYpr2kRg0Jj3twj7SfklkgZikH08oUL3WjoXjlCkNYsFoBwLAduO76g6Z5iU9loPebTNXVdkz7UQTEoT11efTnnoNpwVIzips7etUjzMganD9Vte35KjopgeqChAWxundN74y8rHAAXiet6Eu5DM04qGVuCzMpwNra0kvRKT27eoS6B4xRFkM5Ai8mlaP81Wfj7dy5X1HTsY6qFR",
+            "c4hlDrs2NjzTz9WF1IKDOiJuOxycKVBUvtecSMerq15Hjmxhw6bQ7M2AwVhJ5cJtv1vQJaEKa7vTbF4MsoP0ROKG5xvwgmnbVoK7BUvxGDsmN35YccxK1odj3lsxdYJW8ns55keJoyAdsIPAQ5V2nwiP0ZZRupIl9U3OqbyHi0XQGFSs8BaULBIslrn8bMXISAFdskFBjcz9h88hukLEivstqUNjusB5e7iYbOImhYFzb9musyXIlsIfdVHKefa",
         },
         body: JSON.stringify({
           auth_id: "122792814220057352",
@@ -311,15 +313,14 @@ export default function GestaoUsuarios() {
       contactos.push(selectedusers[index].contacto);
     }
 
-    console.log(contactos);
-    return;
+  
     const SmSmessage = `Saudações caro membro!\n\nA sua conta ANJE está inactiva, por este motivo a nossa organização não consegue aprovar a sua Candidatura para o evento das mulheres empresárias , para activar entra em: https://portal-eta-eight.vercel.app/login, em pagamentos poderá pagar a sua quota escolhendo o pacote que mais se enquadra com a sua disponibilidade financeira, eis os pacotes abaixo:\n\nDiamante - 35.000,00kz\nPlatina - 20.000,00kz\nOuro - 10.000,00kz\nPrata - 5.000,00kz\nBronze - 1.000,00kz\n\nEsperamos tê-lo(a) na “1ª Conferência Anual de Jovens Mulheres Empresarias de Angola.” Dia 16 de Março no Centro de Conferência de Belas (CCB) pelas às 08H00.\n\nIBAN: AO06006600000676366110127\nNOME: ANJE ANGOLA ASS N P C J EMPRESARIOS.\n\nComprovativos e suporte técnico pelo: 925696426\n\nANJE Angola – “Uma Angola feita por todos, e melhor para todos”`;
     const resmessage = await fetch("https://app.smshub.ao/api/sendsms", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         accessToken:
-          "4xPR7x9Sn1njzYIMka7GD0vJKG6vP5Cm6liHjRTqR3CoDiPzYpr2kRg0Jj3twj7SfklkgZikH08oUL3WjoXjlCkNYsFoBwLAduO76g6Z5iU9loPebTNXVdkz7UQTEoT11efTnnoNpwVIzips7etUjzMganD9Vte35KjopgeqChAWxundN74y8rHAAXiet6Eu5DM04qGVuCzMpwNra0kvRKT27eoS6B4xRFkM5Ai8mlaP81Wfj7dy5X1HTsY6qFR",
+          "c4hlDrs2NjzTz9WF1IKDOiJuOxycKVBUvtecSMerq15Hjmxhw6bQ7M2AwVhJ5cJtv1vQJaEKa7vTbF4MsoP0ROKG5xvwgmnbVoK7BUvxGDsmN35YccxK1odj3lsxdYJW8ns55keJoyAdsIPAQ5V2nwiP0ZZRupIl9U3OqbyHi0XQGFSs8BaULBIslrn8bMXISAFdskFBjcz9h88hukLEivstqUNjusB5e7iYbOImhYFzb9musyXIlsIfdVHKefa",
       },
       body: JSON.stringify({
         auth_id: "122792814220057352",
@@ -366,6 +367,19 @@ export default function GestaoUsuarios() {
     } else {
       router.replace("/");
     }
+  };
+
+
+
+  
+  const sendtoallnotinscrito = async () => {
+    const res = await fetch("/api/usuarios/regulariza", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+   alert("done")
   };
 
   return (
@@ -441,7 +455,10 @@ export default function GestaoUsuarios() {
                   className="btn btn-sm btn-primary"
                 >
                   <i className="fa fa-filter"></i> filtros
-                </button>{" "}
+                </button>
+                {/* <button className="btn btn-primary"  onClick={(e) => {
+                      sendtoallnotinscrito();
+                    }}> todos nao inscrito</button> */}
                 {naopago ? (
                   <button
                     onClick={(e) => {

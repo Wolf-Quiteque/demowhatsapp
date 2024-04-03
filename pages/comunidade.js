@@ -216,7 +216,7 @@ const Dummy = () => {
             zIndex: "1000",
           }}
         >
-          {user && user.pago ? (
+          {user && user.estado ? (
             <button
               className="btn btn-primary"
               onClick={() => setModalPostsetModalPost(true)}
@@ -467,7 +467,7 @@ const Dummy = () => {
                       />
                     </div>
                     <div className="col-md-2">
-                      {user.pago ? (
+                      {user.estado ? (
                         <button
                           className="btn btn-primary"
                           style={{ width: "100%" }}

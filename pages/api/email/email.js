@@ -4,7 +4,7 @@ import { ObjectId } from "bson";
 import makeid from "../../../lib/random";
 export default async function handlerMail(req) {
   const senha = makeid();
-  console.log(req);
+
   const transporter = nodemailer.createTransport({
     host: "smtp.titan.email",
     port: 465,

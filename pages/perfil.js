@@ -654,21 +654,7 @@ const Profile = ({ user }) => {
                 <div className="tab-content">
                   <div className="active tab-pane" id="activity">
                     <div className="row">
-                      <div className="col-md-12 text-center">
-                        <h5 className="text-successs">
-                          {usuario && usuario.estado
-                            ? "Acesso aberto para membros Activos"
-                            : ""}
-                        </h5>
-                      </div>
-                      <div className="col-md-4 text-center">
-                        <h6>16 de Março de 2024</h6>
-                        <h6>08H | Centro de conferência de Belas (CCB)</h6>
-                        <img
-                          src="img/conferencia.jpg"
-                          className="img-thumbnail img-fluid"
-                        />
-                      </div>
+                   
                     </div>
                   </div>
 
