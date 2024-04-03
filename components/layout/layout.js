@@ -17,10 +17,10 @@ export default function Layout({ children }) {
   const [newstatus, setnewstatus] = useState("");
 
   const getsession = async () => {
-    if (status === "unauthenticated" && router.pathname != "/inscritos"   ) {
+    if (status === "unauthenticated" && router.pathname != "/inscritos") {
       const element = document.querySelector("body");
       element.classList.add("hero");
-      if (router.pathname != "/inscricao" || router.pathname != "/recuperacao") {
+      if (router.pathname != "/inscricao" && router.pathname != "/recuperacao") {
         router.replace("/login");
       }
     }
