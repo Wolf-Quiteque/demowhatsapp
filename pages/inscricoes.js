@@ -459,7 +459,7 @@ export default function GestaoUsuarios() {
                 {/* <button className="btn btn-primary"  onClick={(e) => {
                       sendtoallnotinscrito();
                     }}> todos nao inscrito</button> */}
-                {naopago ? (
+                {/* {naopago ? (
                   <button
                     onClick={(e) => {
                       enviarNaopagomensagem();
@@ -469,7 +469,9 @@ export default function GestaoUsuarios() {
                     <i className="fa fa-envelope"></i> Enviar Mensagem
                   </button>
                 ) : (
-                  <button
+                 
+                )} */}
+                 <button
                     onClick={(e) => {
                       setShowMessageModal(true);
                     }}
@@ -477,7 +479,6 @@ export default function GestaoUsuarios() {
                   >
                     <i className="fa fa-envelope"></i> Enviar Mensagem
                   </button>
-                )}
                 <span className="mr-3">
                   {" "}
                   <strong>Nº:{" " + numberincritos}</strong>{" "}
