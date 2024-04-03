@@ -82,7 +82,7 @@ export default function Recuperacao() {
       <div className="login-box">
         <div className="card card-outline card-primary">
           <div className="card-body">
-            <p className="login-box-msg">Esqueceste sua palavra passe ?</p>
+            <p className="login-box-msg">Obtenha nova palavra-passe</p>
             <form action="recover-password.html" method="post">
               <div className="input-group mb-3">
                 <input
@@ -115,7 +115,7 @@ export default function Recuperacao() {
               <div className="row">
                 <div className="col-12">
                  {!loading && ( <button onClick={Enviar} className="btn btn-primary btn-block">
-                    requira nova palavra passe
+                    Adquirir agora
                   </button>)}
                   <Link href="/login">
                     <a className="btn btn-xs btn-warning btn-block">
