@@ -409,13 +409,13 @@ export default function GestaoUsuarios() {
                 <button
                   onClick={(e) => {
                     setinfo({
-                      estado: true,
+                      pago: true,
                     });
                     setnaopago(false);
                   }}
                   className="btn btn-sm btn-success mr-1"
                 >
-                  <i className="fa fa-coins"></i> aprovados
+                  <i className="fa fa-coins"></i> Pago
                 </button>
                 <button
                   onClick={(e) => {
@@ -445,7 +445,7 @@ export default function GestaoUsuarios() {
                   }}
                   className="btn btn-sm btn-danger mr-1"
                 >
-                  <i className="fa fa-coins"></i>não aprovados
+                  <i className="fa fa-coins"></i>não pago
                 </button>
                 <button
                   onClick={() => {

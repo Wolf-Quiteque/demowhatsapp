@@ -6,13 +6,13 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return;
   }
-  return
+ 
   const cliente = await clientPromise;
   const db = cliente.db("anje");
   // Update many documents
   const result = await db
     .collection("usuarios")
-    .updateMany({ classe: { $exists: true } }, { $set: { estado: true}});
+    .updateMany({ pago: true } , { $set: { pago: false,comprovativo:false}});
 
   res.json();
 }
